@@ -1,0 +1,70 @@
+[
+  {
+    "id": "emp_01",
+    "name": "Иван Петров",
+    "roles": ["waiter"],
+    "pinCode": "1111",
+    "isActive": true,
+    "avatarUrl": "/avatars/waiter-1.png",
+    "permissions": ["orders:create", "orders:split", "kitchen:view"]
+  },
+  {
+    "id": "emp_02",
+    "name": "Анна Сидорова",
+    "roles": ["bartender", "cashier"],
+    "pinCode": "2222",
+    "isActive": true,
+    "avatarUrl": "/avatars/bartender-1.png",
+    "permissions": [
+      "orders:create",
+      "orders:split",
+      "orders:discount",
+      "kitchen:view",
+      "kitchen:stop_list",
+      "cash:open_shift",
+      "cash:close_shift",
+      "cash:pay"
+    ]
+  },
+  {
+    "id": "emp_03",
+    "name": "Марк Шеф",
+    "roles": ["cook"],
+    "pinCode": "3333",
+    "isActive": true,
+    "avatarUrl": "/avatars/cook-1.png",
+    "permissions": ["kitchen:view", "kitchen:stop_list"]
+  },
+  {
+    "id": "emp_04",
+    "name": "Елена Дмитриевна",
+    "roles": ["manager"],
+    "pinCode": "0000",
+    "isActive": true,
+    "avatarUrl": "/avatars/manager-1.png",
+    "permissions": [
+      "orders:create",
+      "orders:delete_item",
+      "orders:discount",
+      "orders:split",
+      "kitchen:view",
+      "kitchen:stop_list",
+      "cash:open_shift",
+      "cash:close_shift",
+      "cash:pay",
+      "stock:view",
+      "stock:manage",
+      "admin:users",
+      "admin:reports"
+    ]
+  },
+  {
+    "id": "emp_05",
+    "name": "Бывший Сотрудник",
+    "roles": ["waiter"],
+    "pinCode": "9999",
+    "isActive": false,
+    "avatarUrl": null,
+    "permissions": []
+  }
+]
