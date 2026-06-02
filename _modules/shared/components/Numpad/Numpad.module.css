@@ -2,40 +2,38 @@
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  max-width: 24rem; /* max-w-sm */
-  background-color: #171717; /* bg-neutral-900 */
+  max-width: 24rem;
+  background-color: #171717;
   padding: 1rem;
-  border-radius: 1.5rem; /* rounded-3xl */
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); /* shadow-2xl */
-  border: 1px solid #262626; /* border-neutral-800 */
+  border-radius: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid #262626;
 }
 
 .grid {
-  display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.75rem;
 }
 
 /* Базовые стили для всех кнопок */
 .btn {
-  height: 5rem; /* h-20 */
+  height: 5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
-  border-radius: 1rem; /* rounded-2xl */
+  border-radius: 1rem;
   user-select: none;
-  touch-action: manipulation; /* touch-manipulation (убирает задержку тапа) */
+  touch-action: manipulation;
   cursor: pointer;
   transition: background-color 0.1s ease;
 }
 
 /* Цифровые кнопки (0-9) */
 .digitBtn {
-  font-size: 1.875rem; /* text-3xl */
+  font-size: 1.875rem;
   font-weight: 600;
   color: #ffffff;
-  background-color: #262626; /* bg-neutral-800 */
+  background-color: #262626;
 }
 .digitBtn:hover {
   background-color: #404040;
@@ -43,12 +41,16 @@
 .digitBtn:active {
   background-color: #525252;
 }
+.digitBtn:disabled{
+  opacity: .5;
+  pointer-events: none
+}
 
 /* Кнопка сброса (С) */
 .clearBtn {
-  font-size: 1.25rem; /* text-xl */
+  font-size: 1.25rem;
   font-weight: 700;
-  color: #f87171; /* text-red-400 */
+  color: #f87171;
   background-color: rgba(38, 38, 38, 0.5);
 }
 .clearBtn:hover {
@@ -60,8 +62,8 @@
 
 /* Кнопка стереть символ (⌫) */
 .deleteBtn {
-  font-size: 1.5rem; /* text-2xl */
-  color: #fbbf24; /* text-amber-400 */
+  font-size: 1.5rem;
+  color: #fbbf24;
   background-color: rgba(38, 38, 38, 0.5);
 }
 .deleteBtn:hover {

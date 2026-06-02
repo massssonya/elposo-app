@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
+import { useNumpadState, NumpadValidationResult } from '@shared/components/Numpad/useNumpadState';
 import { useAuthStore } from '@shared/stores/authStore';
 import { Permission } from '@shared/types/auth';
 
@@ -9,58 +10,34 @@ interface UseAuthScreenProps {
 }
 
 export function useAuthScreen({ onSuccessRedirect }: UseAuthScreenProps) {
-  const [pin, setPin] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
-
   const authByPin = useAuthStore((state) => state.authByPin);
 
-  const handleKeyPress = useCallback(
-    (digit: string) => {
-      setPin((prevPin) => {
-        if (prevPin.length >= PIN_LENGTH) return prevPin;
+  const handleAuthComplete = useCallback((finalPin: string): NumpadValidationResult => {
+    const result = authByPin(finalPin);
 
-        setError(null);
-        const newPin = prevPin + digit;
+    if (result.success) {
+      const loggedUser = useAuthStore.getState().user;
+      if (loggedUser) {
+        setTimeout(() => onSuccessRedirect(loggedUser.permissions), 0);
+      }
+      return { success: true };
+    }
 
-        if (newPin.length === PIN_LENGTH) {
-          const result = authByPin(newPin);
+    return { 
+      success: false, 
+      error: result.error || 'Неверный ПИН-код' 
+    };
+  }, [authByPin, onSuccessRedirect]);
 
-          if (result.success) {
-            const loggedUser = useAuthStore.getState().user;
-            if (loggedUser) {
-              setTimeout(() => onSuccessRedirect(loggedUser.permissions), 0);
-            }
-          } else {
-            setError(result.error || 'Ошибка входа');
-            return '';
-          }
-        }
-
-        return newPin;
-      });
-    },
-    [authByPin, onSuccessRedirect]
-  );
-
-  const handleClear = useCallback(() => {
-    setPin('');
-    setError(null);
-  }, []);
-
-  const handleDelete = useCallback(() => {
-    setPin((prev) => {
-      if (prev.length === 0) return prev;
-      setError(null);
-      return prev.slice(0, -1);
-    });
-  }, []);
+  const { value: pin, error, numpadProps } = useNumpadState({
+    maxLength: PIN_LENGTH,
+    onComplete: handleAuthComplete,
+  });
 
   return {
     pin,
     error,
-    PIN_LENGTH,
-    handleKeyPress,
-    handleClear,
-    handleDelete,
+    maxLength: PIN_LENGTH,
+    numpadProps,
   };
 }
