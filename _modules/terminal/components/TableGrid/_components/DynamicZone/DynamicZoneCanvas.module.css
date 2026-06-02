@@ -1,0 +1,56 @@
+ .dynamicLayout {
+    height: 100%;
+    padding: 1.5rem;
+  }
+  
+  .dynamicControl {
+    flex: 1;
+    min-width: 250px;
+  }
+  
+  .dynamicDisplay {
+    background-color: #171717;
+    border: 1px solid #262626;
+    border-radius: 1rem;
+    height: 4.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #10b981;
+  }
+  
+  .dynamicList {
+    flex: 2;
+    align-content: flex-start;
+    overflow-y: auto;
+  }
+  
+  .dynamicCard {
+    height: 100px;
+    background-color: #7f1d1d;
+    border: 2px solid #ef4444;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  
+  .dynamicSubmitButton{
+    height: 3rem;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 20px;
+    background-color: #0dac77;
+    font-weight: bold;
+    font-size: large;
+    color: white;
+    transition: color 0.5s, background-color 0.5s;
+  }
+
+  .dynamicSubmitButton:hover{
+    background-color: #15ce90;
+  }
+
+  .dynamicSubmitButton:disabled{
+    color: #999797;
+    background-color: #686868;
+  }
