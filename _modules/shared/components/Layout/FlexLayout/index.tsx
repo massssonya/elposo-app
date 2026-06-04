@@ -3,7 +3,11 @@
 import React from 'react';
 import styles from './FlexLayout.module.css';
 
-interface FlexLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
+type AsProp<T extends React.ElementType> = {
+  as?: T;
+};
+
+type FlexLayoutProps<T extends React.ElementType> = AsProp<T> & {
   children: React.ReactNode;
   direction?: 'row' | 'col';
   justify?: 'start' | 'end' | 'center' | 'between' | 'around';
@@ -11,9 +15,10 @@ interface FlexLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   wrap?: 'yes' | 'no';
   gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
-}
+} & Omit<React.ComponentPropsWithoutRef<T>, keyof AsProp<T> | 'direction' | 'justify' | 'align' | 'wrap' | 'gap'>;
 
-export function FlexLayout({
+export function FlexLayout<T extends React.ElementType = 'div'>({
+  as,
   children,
   direction = 'row',
   justify = 'start',
@@ -22,8 +27,10 @@ export function FlexLayout({
   gap = 'none',
   className = '',
   ...props
-}: FlexLayoutProps) {
+}: FlexLayoutProps<T>) {
   
+  const Component = as || 'div';
+
   const flexClasses = [
     styles.flex,
     styles[`dir_${direction}`],
@@ -35,8 +42,8 @@ export function FlexLayout({
   ].filter(Boolean).join(' ');
 
   return (
-    <div className={flexClasses} {...props}>
+    <Component className={flexClasses} {...props}>
       {children}
-    </div>
+    </Component>
   );
 }
