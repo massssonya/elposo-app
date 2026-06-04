@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+
 import { Permission } from '@shared/types/auth';
 import { getRedirectPath } from '@shared/utils/getRedirectPath';
 import { AuthScreen } from '@shared/components/AuthScreen';
