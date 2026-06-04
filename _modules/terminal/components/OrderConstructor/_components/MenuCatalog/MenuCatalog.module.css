@@ -1,0 +1,98 @@
+.catalogContainer {
+    flex: 2; /* Занимает в 2 раза больше места, чем чек */
+    overflow: hidden;
+    height: 100%;
+  }
+  
+  /* Лента категорий (Горизонтальный скролл) */
+  .categoriesRow {
+    overflow-x: auto;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #171717;
+    /* Прячем дефолтный скроллбар для эстетики терминала */
+    scrollbar-width: none; 
+  }
+  
+  .categoriesRow::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .categoryTab {
+    padding: 0.85rem 1.5rem;
+    background-color: #111111;
+    border: 1px solid #262626;
+    border-radius: 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #a3a3a3;
+    cursor: pointer;
+    white-space: nowrap; /* Запрещаем перенос слов в кнопке */
+    transition: all 0.15s ease;
+  }
+  
+  .categoryTab:hover {
+    border-color: #404040;
+    color: #ffffff;
+  }
+  
+  .catActive {
+    background-color: #3b82f6; /* Синий акцент для активной вкладки меню */
+    border-color: #3b82f6;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+  }
+  
+  /* Сетка блюд */
+  .itemsGrid {
+    flex: 1;
+    overflow-y: auto;
+    align-content: flex-start; /* Прижимает карточки к верху при неполной сетке */
+    padding-right: 0.25rem; /* Отступ для красивого системного скролла */
+  }
+  
+  .menuCard {
+    background-color: #111111;
+    border: 1px solid #262626;
+    border-radius: 1.25rem;
+    padding: 1.2rem;
+    height: 7.5rem; /* Фиксированная высота для ровных плиток */
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s ease, background-color 0.15s ease, border-color 0.15s ease;
+  }
+  
+  .menuCard:hover {
+    border-color: #404040;
+    background-color: #141414;
+  }
+  
+  .menuCard:active {
+    transform: scale(0.96);
+    background-color: #171717;
+  }
+
+  .menuCard:disabled {
+    opacity: .7;
+    pointer-events: none;
+  }
+  
+  .itemName {
+    font-weight: 600;
+    font-size: 1.05rem;
+    line-height: 1.35rem;
+    color: #ffffff;
+    /* Ограничиваем текст двумя строками с троеточием для длинных названий */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .itemPrice {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: #f59e0b; /* Янтарный цвет для ценников блюд */
+    margin-top: auto;
+  }
+  

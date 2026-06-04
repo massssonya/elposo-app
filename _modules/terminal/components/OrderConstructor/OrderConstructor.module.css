@@ -1,0 +1,45 @@
+.screen {
+    height: 100vh;
+    height: 100dvh;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    overflow: hidden;
+  }
+  
+  /* Верхняя сервисная панель */
+  .topBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #111111;
+    border-bottom: 1px solid #262626;
+    padding: 0.75rem 1.5rem;
+    height: 4rem;
+  }
+  
+  .backBtn {
+    padding: 0.5rem 1rem;
+    background-color: #262626;
+    border: 1px solid #404040;
+    border-radius: 0.75rem;
+    color: #e5e5e5;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+  
+  .backBtn:hover {
+    background-color: #404040;
+  }
+  
+  .backBtn:active {
+    background-color: #171717;
+  }
+  
+  .tableTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #10b981; /* Зеленый акцент номера стола */
+    letter-spacing: 0.02em;
+  }
+  
