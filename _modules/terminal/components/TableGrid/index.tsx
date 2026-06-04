@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-import { useTableStore } from '@terminal/store/tableStore';
+import { useTableStore } from '@shared/stores/tableStore';
 import { StaticZoneCanvas } from './_components/StaticZone';
 import { DynamicZoneCanvas } from './_components/DynamicZone';
-import { Table, HallZone } from '@shared/types/tables';
+import { Table, TableStatus, HallZone } from '@shared/types/tables';
+import { ROUTES } from '@shared/constants/routes';
 
 import styles from './TableGrid.module.css';
 
@@ -15,51 +17,56 @@ const INITIAL_MOCK_ZONES:HallZone[] = [
     name: 'Основной зал',
     isDynamicZone: false,
     tables: [
-      { id: 't1', number: '1', status: 'free', capacity: 4, isDynamic: false, x: 10, y: 15, width: 12, height: 14, shape: 'rectangle' },
-      { id: 't2', number: '2', status: 'busy', capacity: 2, isDynamic: false, x: 30, y: 15, width: 10, height: 10, shape: 'circle' },
-      { id: 't3', number: '3', status: 'reserved', capacity: 6, isDynamic: false, x: 55, y: 15, width: 16, height: 14, shape: 'rectangle' },
-      { id: 't4', number: '4', status: 'dirty', capacity: 4, isDynamic: false, x: 10, y: 50, width: 12, height: 14, shape: 'rectangle' },
+      { id: 't1', number: '1', status: TableStatus.FREE, capacity: 4, isDynamic: false, x: 10, y: 15, width: 12, height: 14, shape: 'rectangle' },
+      { id: 't2', number: '2', status: TableStatus.OCCUPIED, capacity: 2, isDynamic: false, x: 30, y: 15, width: 10, height: 10, shape: 'circle' },
+      { id: 't3', number: '3', status: TableStatus.CLEANING, capacity: 6, isDynamic: false, x: 55, y: 15, width: 16, height: 14, shape: 'rectangle' },
+      { id: 't4', number: '4', status: TableStatus.RESERVED, capacity: 4, isDynamic: false, x: 10, y: 50, width: 12, height: 14, shape: 'rectangle' },
     ]
   },
   {
     id: 'zone_fast',
-    name: 'Быстрая выдача (Тейбл-тенты)',
+    name: 'Быстрая выдача',
     isDynamicZone: true,
-    tables: [{ id: 'td_45', number: '45', status: 'busy', capacity: 2, isDynamic: true }]
+    tables: []
   }
 ];
 
 export function TableGrid() {
+  const router = useRouter();
+  const [isHydrated, setIsHydrated] = useState(false);
   const { zones, activeZoneId, setZones, setActiveZone, createDynamicTable } = useTableStore();
 
   useEffect(() => {
-    // В реальном приложении здесь будет запрос к API: fetch('/api/zones')
-    setZones(INITIAL_MOCK_ZONES);
-  }, [setZones]);
+    setIsHydrated(true);
 
-  // Стабилизируем функции колбэков, чтобы предотвратить холостые ререндеры холстов
+    // if(zones.length === 0){
+    //   setZones(INITIAL_MOCK_ZONES)
+    // }
+  }, [setZones, zones.length]);
+
   const handleTableClick = useCallback((table: Table) => {
-    console.log(`Переход к оформлению заказа стола №${table.number}`);
+    router.push(ROUTES.TERMINAL.ORDER(table.id));
   }, []);
 
   const handleCreateDynamicOrder = useCallback((zoneId: string, tableNumber: string) => {
     const result = createDynamicTable(zoneId, tableNumber);
     
-    return {
-      success: result.success,
-      error: result.error
-    };
-  }, [createDynamicTable]);
+    if (result.success && result.table) {
+      router.push(ROUTES.TERMINAL.ORDER(result.table.id));
+      return { success: true };
+    }
+    
+    return { success: false, error: result.error };
+  }, [createDynamicTable, router]);
 
   const activeZone = zones.find((z) => z.id === activeZoneId);
 
-  if (!activeZone) {
+  if (!isHydrated || !activeZone) {
     return <div className={styles.container}>Синхронизация карты залов...</div>;
   }
 
   return (
     <div className={styles.container}>
-      {/* Переключатель вкладок залов */}
       <div className={styles.zoneTabs}>
         {zones.map((zone) => (
           <button
@@ -72,7 +79,6 @@ export function TableGrid() {
         ))}
       </div>
 
-      {/* Декларативный выбор режима отображения */}
       {activeZone.isDynamicZone ? (
         <DynamicZoneCanvas
           zone={activeZone}

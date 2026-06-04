@@ -1,9 +1,18 @@
 export type TableShape = 'rectangle' | 'circle';
 
+export enum TableStatus {
+  FREE = 'FREE',
+  OCCUPIED = 'OCCUPIED',
+  BILL_PAID = 'BILL_PAID',
+  CLEANING = 'CLEANING',
+  RESERVED = 'RESERVED',
+  OUT_OF_SERVICE = 'OUT_OF_SERVICE',
+}
+
 export interface Table {
   id: string;
   number: string;
-  status: 'free' | 'busy' | 'reserved' | 'dirty';
+  status: TableStatus;
   capacity: number;
   currentOrderId?: string;
   
