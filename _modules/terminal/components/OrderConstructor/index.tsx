@@ -52,14 +52,14 @@ export function OrderConstructor() {
         <OrderReceipt tableId={tableId} />
         <MenuCatalog tableId={tableId} />
       </FlexLayout>
-      {/* 🌟 Отрендерим модалку, если стейт активен */}
       {
-        <TransferModal
-          isOpen={isTransferOpen}
-          currentTableId={tableId}
-          onClose={() => setIsTransferOpen(false)}
-          onSuccessTransfer={handleSuccessTransfer}
-        />
+        isTransferOpen &&
+          <TransferModal
+            isOpen={isTransferOpen}
+            currentTableId={tableId}
+            onClose={() => setIsTransferOpen(false)}
+            onSuccessTransfer={handleSuccessTransfer}
+          />
       }
     </FlexLayout>
   );

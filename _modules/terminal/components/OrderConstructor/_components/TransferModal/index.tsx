@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { useTableStore } from '@shared/stores/tableStore';
 import { orderOrchestrator } from '@shared/services/orders.service';
@@ -9,6 +9,39 @@ import { GridLayout } from '@shared/components/UI/Layout/GridLayout';
 import { TableStatus } from '@shared/types/tables';
 
 import styles from './TransferModal.module.css';
+
+interface StatusDisplayStrategy {
+  label: string;
+  className: string;
+}
+
+// для маппинга статусов стола
+export const TABLE_STATUS_STRATEGY: Record<TableStatus, StatusDisplayStrategy> = {
+  [TableStatus.FREE]: {
+    label: 'Свободен',
+    className: styles.status_FREE,
+  },
+  [TableStatus.OCCUPIED]: {
+    label: 'Занят',
+    className: styles.status_OCCUPIED,
+  },
+  [TableStatus.CLEANING]: {
+    label: 'Уборка',
+    className: styles.status_CLEANING,
+  },
+  [TableStatus.RESERVED]: {
+    label: 'Бронь',
+    className: styles.status_RESERVED,
+  },
+  [TableStatus.BILL_PAID]: {
+    label: 'Счет выдан',
+    className: styles.status_BILL_PAID,
+  },
+  [TableStatus.OUT_OF_SERVICE]: {
+    label: 'Не работает',
+    className: styles.status_OUT_OF_SERVICE,
+  },
+};
 
 interface TransferModalProps {
   isOpen: boolean;
@@ -23,11 +56,11 @@ export function TransferModal({
   onClose, 
   onSuccessTransfer 
 }: TransferModalProps) {
-  const zones = useTableStore((state) => state.zones);
+  const getAvailableTables = useTableStore((state) => state.getAvailableTables);
 
-  const availableTables = zones
-    .flatMap((zone) => zone.tables)
-    .filter((table) => table.id !== currentTableId && !table.isDynamic);
+  const availableTables = useMemo(() => {
+    return getAvailableTables(currentTableId);
+  }, [getAvailableTables, currentTableId]);
 
   const handleSelectTable = (targetTableId: string) => {
     orderOrchestrator.transferOrder(currentTableId, targetTableId);
@@ -40,21 +73,22 @@ export function TransferModal({
 
       <div className={styles.tableGridContainer}>
         <GridLayout cols={3} gap="sm">
-          {availableTables.map((table) => (
-            <button
-              key={table.id}
-              onClick={() => handleSelectTable(table.id)}
-              className={styles.tableButton}
-            >
-              <span className={styles.tableLabel}>Стол №{table.number}</span>
-              <span className={`${styles.tableStatus} ${styles[`status_${table.status}`]}`}>
-                {table.status === TableStatus.FREE && 'Свободен'}
-                {table.status === TableStatus.OCCUPIED && 'Занят'}
-                {table.status === TableStatus.CLEANING && 'Уборка'}
-                {table.status === TableStatus.RESERVED && 'Бронь'}
-              </span>
-            </button>
-          ))}
+          {availableTables.map((table) => {
+            const statusConfig = TABLE_STATUS_STRATEGY[table.status];
+
+            return(
+              <button
+                key={table.id}
+                onClick={() => handleSelectTable(table.id)}
+                className={styles.tableButton}
+              >
+                <span className={styles.tableLabel}>Стол №{table.number}</span>
+                <span className={`${styles.tableStatus} ${statusConfig.className}`}>
+                  {statusConfig.label}
+                </span>
+              </button>
+            )
+          })}
         </GridLayout>
       </div>
     </Modal>
