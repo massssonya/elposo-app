@@ -2,31 +2,24 @@
     display: flex;
   }
   
-  /* Направления */
   .dir_row { flex-direction: row; }
   .dir_col { flex-direction: column; }
   
-  /* Выравнивание по главной оси (Justify) */
   .justify_start { justify-content: flex-start; }
   .justify_end { justify-content: flex-end; }
   .justify_center { justify-content: center; }
   .justify_between { justify-content: space-between; }
   .justify_around { justify-content: space-around; }
   
-  /* Выравнивание по поперечной оси (Align) */
   .align_start { align-items: flex-start; }
   .align_end { align-items: flex-end; }
   .align_center { align-items: center; }
   .align_stretch { align-items: stretch; }
   
-  /* Перенос (Wrap) */
   .wrap_no { flex-wrap: nowrap; }
   .wrap_yes { flex-wrap: wrap; }
   
-  /* Отступы (Gap) */
-  .gap_xs { gap: 0.5rem; }
-  .gap_sm { gap: 0.75rem; }
-  .gap_md { gap: 1rem; }
-  .gap_lg { gap: 1.5rem; }
-  .gap_xl { gap: 2rem; }
+  .flexContainer {
+    gap: var(--flex-gap, 0rem);
+  }
   

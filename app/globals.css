@@ -1,27 +1,160 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+    /* 🎨 Основная палитра (Кассовый Dark Mode) */
+    --bg-main: #0a0a0a;         /* Глубокий черный фон приложения */
+    --bg-surface: #111111;      /* Фон панелей, холстов и модалок */
+    --bg-card: #171717;         /* Фон карточек блюд, столов и инпутов */
+    --bg-element: #262626;      /* Фон базовых кнопок и элементов управления */
+    --bg-element-hover: #404040;/* Фон элементов при наведении */
+    --bg-element-active: #525252;/* Визуальный отклик при тапе/клике */
+  
+    /* 📝 Текст и Границы */
+    --text-main: #ffffff;       /* Основной белый текст */
+    --text-muted: #a3a3a3;      /* Вторичный серый текст (подзаголовки, цены) */
+    --text-disabled: #525252;   /* Текст заблокированных элементов */
+    --border-main: #262626;     /* Базовые тонкие границы модулей */
+    --border-muted: #171717;    /* Мягкие внутренние разделители */
+  
+    /* 🟢 Цвета Системных Статусов и Модулей */
+    --color-primary: #3b82f6;   /* Синий (Категории меню, навигация) */
+    --color-primary-shadow: rgba(59, 130, 246, 0.3);
+  
+    --color-success: #10b981;   /* Зеленый (Свободные столы, кнопка оплаты, успех) */
+    --color-success-shadow: rgba(16, 185, 129, 0.3);
+  
+    --color-danger: #ef4444;    /* Красный (Занятые столы, удаление, ошибки) */
+    --color-danger-shadow: rgba(239, 68, 68, 0.3);
+  
+    --color-warning: #f59e0b;   /* Янтарный (Бронь стола, стоп-листы, цены блюд) */
+    --color-warning-shadow: rgba(245, 158, 11, 0.3);
+  
+    --color-info: #6366f1;      /* Фиолетовый (Кассовые смены, инфо-оповещения) */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --bg-card-hover: #141414;
+
+    --text-status-free: #a7f3d0;          /* Нежно-зеленый (отлично читается на темно-зеленом фоне) */
+    --text-status-occupied: #fca5a5;      /* Нежно-красный (на темно-красном фоне) */
+    --text-status-bill-paid: #93c5fd;     /* Нежно-синий */
+    --text-status-reserved: #fde68a;      /* Нежно-янтарный */
+    --text-status-cleaning: #f5f5f5;      /* Чистый светло-серый */
+    --text-status-out-of-service: #78716c;/* Приглушенный земляной для неактивных блоков */
+  
+    /* 📏 Скругления (Border Radius) — для ресторанных интерфейсов важна крупная геометрия */
+    --radius-sm: 0.5rem;        /* Маленькие кнопки, шильдики */
+    --radius-md: 1rem;          /* Карточки блюд, строки чека, инпуты */
+    --radius-lg: 1.5rem;         /* Большие холсты залов, модалки, Numpad */
+    --radius-xl: 2rem;          /* Крупные фоновые блоки */
+  
+    /* ⚡ Высота элементов для сенсорных экранов (Touch Targets) */
+    --touch-target-sm: 2.5rem;  /* Минимальная высота (кнопки + / - в чеке) */
+    --touch-target-md: 3.5rem;  /* Средняя высота (кнопки отправки, ввода ПИН) */
+    --touch-target-lg: 4.5rem;  /* Крупная высота (карточки столов, плитки меню) */
   }
-}
+  
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, body {
+    height: 100%;
+    height: 100dvh;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  button, [role="button"] {
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
 
-body {
-  /* color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--bg-main);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--bg-element);
+    border-radius: var(--radius-sm);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--bg-element-hover);
+  }
+  
+  .pos-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: transform 0.1s ease, background-color 0.15s ease;
+  }
+  
+  .pos-btn:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  
+  .pos-btn:disabled {
+    background-color: var(--bg-card) !important;
+    color: var(--text-disabled) !important;
+    border: 1px solid var(--border-muted) !important;
+    cursor: not-allowed;
+    box-shadow: none !important;
+  }
+  
+
+/* 🟢 Свободен / Успех */
+.pos-status-FREE {
+  color: var(--text-status-free); /* 🌟 Заменили на контрастный выбеленный текст */
+  border-color: var(--color-success);
 }
+div.pos-status-FREE { background-color: #064e3b; } 
+
+/* 🟥 Занят / В работе */
+.pos-status-OCCUPIED {
+  color: var(--text-status-occupied); /* 🌟 Заменили на контрастный выбеленный текст */
+  border-color: var(--color-danger);
+}
+div.pos-status-OCCUPIED { background-color: #7f1d1d; }
+
+/* 🟦 Счет выдан / Предоплата */
+.pos-status-BILL_PAID {
+  color: var(--text-status-bill-paid); /* 🌟 Заменили на контрастный выбеленный текст */
+  border-color: var(--color-primary);
+}
+div.pos-status-BILL_PAID { background-color: #1e3a8a; }
+
+/* 🟨 Забронирован / Внимание */
+.pos-status-RESERVED {
+  color: var(--text-status-reserved); /* 🌟 Заменили на контрастный выбеленный текст */
+  border-color: var(--color-warning);
+}
+div.pos-status-RESERVED { background-color: #78350f; }
+
+/* 🔲 Требует уборки */
+.pos-status-CLEANING {
+  color: var(--text-status-cleaning); /* 🌟 Заменили на чистый светлый текст */
+  border-color: var(--bg-element-hover);
+}
+div.pos-status-CLEANING { background-color: #404040; }
+
+/* ⬛ Не обслуживается / Сбой */
+.pos-status-OUT_OF_SERVICE {
+  color: var(--text-status-out-of-service);
+  border-color: var(--border-muted);
+  opacity: 0.5;
+}
+div.pos-status-OUT_OF_SERVICE { background-color: #1c1917; }

@@ -6,29 +6,25 @@
 }
 
 .text {
-  font-size: 0.875rem; /* text-sm */
+  font-size: 0.875rem; 
   font-weight: 500;
 }
 
-/* 🟥 Вариант: Ошибка (Неверный ПИН, дубликат стола) */
 .variant_error {
-  color: #ef4444; /* text-red-500 */
+  color: var(--color-danger);
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* 🟩 Вариант: Успех (Заказ отправлен, смена открыта) */
 .variant_success {
-  color: #10b981; /* text-emerald-500 */
+  color: var(--color-success);
 }
 
-/* 🟨 Вариант: Предупреждение (Стол забронирован, мало ингредиентов) */
 .variant_warning {
-  color: #f59e0b; /* text-amber-500 */
+  color: var(--color-warning);
 }
 
-/* 🟦 Вариант: Инфо (Номер стола, системная подсказка) */
 .variant_info {
-  color: #3b82f6; /* text-blue-500 */
+  color: var(--color-primary);
 }
 
 @keyframes pulse {

@@ -3,6 +3,15 @@
 import React from 'react';
 import styles from './FlexLayout.module.css';
 
+const GAP_PRESETS = {
+  none: '0rem',
+  xs: '0.5rem',
+  sm: '0.75rem',
+  md: '1rem',
+  lg: '1.5rem',
+  xl: '2rem',
+} as const;
+
 type AsProp<T extends React.ElementType> = {
   as?: T;
 };
@@ -13,7 +22,7 @@ type FlexLayoutProps<T extends React.ElementType> = AsProp<T> & {
   justify?: 'start' | 'end' | 'center' | 'between' | 'around';
   align?: 'start' | 'end' | 'center' | 'stretch';
   wrap?: 'yes' | 'no';
-  gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | string;
   className?: string;
 } & Omit<React.ComponentPropsWithoutRef<T>, keyof AsProp<T> | 'direction' | 'justify' | 'align' | 'wrap' | 'gap'>;
 
@@ -26,10 +35,13 @@ export function FlexLayout<T extends React.ElementType = 'div'>({
   wrap = 'no',
   gap = 'none',
   className = '',
+  style,
   ...props
 }: FlexLayoutProps<T>) {
   
   const Component = as || 'div';
+
+  const resolvedGap = GAP_PRESETS[gap as keyof typeof GAP_PRESETS] || gap;
 
   const flexClasses = [
     styles.flex,
@@ -37,12 +49,17 @@ export function FlexLayout<T extends React.ElementType = 'div'>({
     styles[`justify_${justify}`],
     styles[`align_${align}`],
     styles[`wrap_${wrap}`],
-    gap !== 'none' ? styles[`gap_${gap}`] : '',
+    styles.flexContainer,
     className
   ].filter(Boolean).join(' ');
 
+  const dynamicStyles = {
+    ...style,
+    '--flex-gap': resolvedGap,
+  } as React.CSSProperties;
+
   return (
-    <Component className={flexClasses} {...props}>
+    <Component className={flexClasses} style={dynamicStyles} {...(props as React.ComponentPropsWithoutRef<any>)}>
       {children}
     </Component>
   );

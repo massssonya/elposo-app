@@ -1,45 +1,74 @@
 .screen {
-    height: 100vh;
-    height: 100dvh;
-    background-color: #0a0a0a;
-    color: #ffffff;
-    overflow: hidden;
-  }
+  height: 100vh;
+  height: 100dvh;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  overflow: hidden;
+}
+
+.topBar {
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-main);
+  padding: 0.75rem 1.5rem;
+  height: 4rem;
+}
+
+.backBtn {
+  padding: 0.5rem 1rem;
+  background-color: var(--bg-element);
+  border: 1px solid var(--bg-element-hover);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+.backBtn:hover {
+  background-color: var(--bg-element-hover);
+  color: var(--text-main);
+}
+
+.backBtn:active {
+  background-color: var(--bg-element-active);
+  transform: scale(0.97);
+}
+
+.transferBtn {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  height: 2.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
   
-  /* Верхняя сервисная панель */
-  .topBar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #111111;
-    border-bottom: 1px solid #262626;
-    padding: 0.75rem 1.5rem;
-    height: 4rem;
-  }
+  background-color: var(--color-warning);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  border: none;
   
-  .backBtn {
-    padding: 0.5rem 1rem;
-    background-color: #262626;
-    border: 1px solid #404040;
-    border-radius: 0.75rem;
-    color: #e5e5e5;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.15s ease;
-  }
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   
-  .backBtn:hover {
-    background-color: #404040;
-  }
-  
-  .backBtn:active {
-    background-color: #171717;
-  }
-  
-  .tableTitle {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #10b981; /* Зеленый акцент номера стола */
-    letter-spacing: 0.02em;
-  }
-  
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.transferBtn:hover {
+  background-color: #d97706;
+}
+
+.transferBtn:active {
+  background-color: var(--bg-element-active);
+  transform: scale(0.96);
+}
+
+
+.tableTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-success);
+  letter-spacing: 0.02em;
+}

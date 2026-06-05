@@ -1,74 +1,32 @@
+.tableItem {
+  position: absolute;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+  border: 2px solid transparent;
+}
 
-  .tableItem {
-    position: absolute;
+.tableItem:active {
+  transform: scale(0.96);
+}
 
-    font-weight: 700;
-    cursor: pointer;
-    user-select: none;
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
-    border: 2px solid transparent;
-  }
-  
-  .tableItem:active {
-    transform: scale(0.96);
-  }
-  
-  /* Формы столов */
-  .shape_rectangle {
-    border-radius: 0.75rem;
-  }
-  
-  .shape_circle {
-    border-radius: 9999px;
-  }
-  
-  /* Цветовые статусы столов */
-  .status_FREE {
-    background-color: #064e3b; /* Темно-зеленый */
-    border-color: #10b981;
-    color: #a7f3d0;
-  }
-  .status_FREE:hover { background-color: #047857; }
-  
-  .status_OCCUPIED {
-    background-color: #7f1d1d; /* Темно-красный */
-    border-color: #ef4444;
-    color: #fca5a5;
-  }
-  .status_OCCUPIED:hover { background-color: #b91c1c; }
+.shape_rectangle {
+  border-radius: var(--radius-sm);
+}
 
-  .status_BILL_PAID {
-    background-color: #1e3a8a; /* Синий */
-    border-color: #3b82f6;
-  }
-  
-  .status_RESERVED {
-    background-color: #78350f; /* Темно-желтый */
-    border-color: #f59e0b;
-    color: #fde68a;
-  }
-  
-  .status_CLEANING {
-    background-color: #404040; /* Серый */
-    border-color: #a3a3a3;
-    color: #e5e5e5;
-  }
+.shape_circle {
+  border-radius: 9999px;
+}
 
-  .status_OUT_OF_SERVICE {
-    background-color: #1c1917;
-    border-color: #78716c;
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-  
-  .tableNumber {
-    font-size: 1.25rem;
-  }
-  
-  .tableCapacity {
-    font-size: 0.75rem;
-    opacity: 0.6;
-    font-weight: 400;
-  }
-  
- 
+.tableNumber {
+  font-size: 1.25rem;
+  color: var(--text-main);
+}
+
+.tableCapacity {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-top: 0.125rem;
+}

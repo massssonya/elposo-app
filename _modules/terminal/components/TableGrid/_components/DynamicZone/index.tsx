@@ -102,7 +102,7 @@ interface TableListProps {
 const TableList = React.memo(({ tables, onTableClick }: TableListProps) => {
   return (
     <GridLayout 
-      cols="auto" 
+      cols="3" 
       minWidth="110px" 
       gap="sm"
       className={styles.dynamicList}
@@ -113,7 +113,7 @@ const TableList = React.memo(({ tables, onTableClick }: TableListProps) => {
           direction="col"
           align="center"
           justify="center"
-          className={styles.dynamicCard} 
+          className={`${styles.dynamicCard} pos-status-${table.status}`}
           onClick={() => onTableClick(table)}
         >
           <span>Стол</span>

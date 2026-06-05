@@ -41,7 +41,7 @@ export function OrderConstructor() {
 
         <button 
           onClick={() => setIsTransferOpen(true)} 
-          className="px-4 h-10 bg-amber-600 hover:bg-amber-500 font-semibold rounded-xl text-sm transition-colors cursor-pointer"
+          className={styles.transferBtn}
         >
           🔄 Перенести заказ
         </button>

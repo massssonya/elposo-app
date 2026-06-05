@@ -22,21 +22,17 @@ export function Modal({
   closeOnOverlayClick = true,
 }: ModalProps) {
   
-  // 🌟 Системная бизнес-логика модального окна
   useEffect(() => {
     if (!isOpen) return;
 
-    // 1. Блокируем скролл body под оверлеем
     const originalStyle = window.getComputedStyle(document.body).overflow;
     document.body.style.overflow = 'hidden';
 
-    // 2. Закрытие окна по кнопке Escape (Esc)
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
 
-    // Подчищаем слушатели и стили при размонтировании/закрытии
     return () => {
       document.body.style.overflow = originalStyle;
       window.removeEventListener('keydown', handleKeyDown);
@@ -50,8 +46,9 @@ export function Modal({
   };
 
   return (
-    <div className={styles.overlay} onClick={handleOverlayClick}>
-      <div 
+    <FlexLayout justify="center" align="center" className={styles.overlay} onClick={handleOverlayClick}>
+      <FlexLayout 
+        direction='col'
         className={`${styles.modal} ${styles[`size_${size}`]}`} 
         onClick={(e) => e.stopPropagation()}
       >
@@ -65,7 +62,7 @@ export function Modal({
         <div className={styles.content}>
           {children}
         </div>
-      </div>
-    </div>
+      </FlexLayout>
+    </FlexLayout>
   );
 }

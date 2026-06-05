@@ -4,7 +4,7 @@ import React from 'react';
 
 import { Numpad } from '../Numpad';
 import { Message } from '../Message';
-import { FlexLayout } from '../Layout/FlexLayout'
+import { FlexLayout } from '../UI/Layout/FlexLayout'
 import { useAuthScreen } from './useAuthScreen';
 import { Permission } from '../types/auth';
 

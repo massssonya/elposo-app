@@ -2,7 +2,8 @@
 
 import React from 'react';
 
-import { GridLayout } from '../Layout/GridLayout'
+import { GridLayout } from '../UI/Layout/GridLayout'
+import { FlexLayout } from '../UI/Layout/FlexLayout'
 
 import styles from './Numpad.module.css';
 
@@ -23,7 +24,7 @@ export const Numpad = React.memo(({
 }: NumpadProps) => {
   return (
     <div className={styles.container}>
-      <GridLayout gap="sm" className={styles.grid}>
+      <GridLayout cols={3} gap="sm" className={styles.grid}>
         {DIGITS.map((digit) => (
           <button
             key={digit}
@@ -36,30 +37,39 @@ export const Numpad = React.memo(({
           </button>
         ))}
 
-        <button
+        <FlexLayout
+          as='button'
+          align='center'
+          justify='center'
           type="button"
           onClick={onClear}
           className={`${styles.btn} ${styles.clearBtn}`}
         >
           Сброс
-        </button>
+        </FlexLayout>
 
-        <button
+        <FlexLayout
+          as='button'
+          align='center'
+          justify='center'
           type="button"
           onClick={() => onKeyPress('0')}
           disabled={disabled}
           className={`${styles.btn} ${styles.digitBtn}`}
         >
           0
-        </button>
+        </FlexLayout>
 
-        <button
+        <FlexLayout
+          as='button'
+          align='center'
+          justify='center'
           type="button"
           onClick={onDelete}
           className={`${styles.btn} ${styles.deleteBtn}`}
         >
           ⌫
-        </button>
+        </FlexLayout>
       </GridLayout>
     </div>
   );

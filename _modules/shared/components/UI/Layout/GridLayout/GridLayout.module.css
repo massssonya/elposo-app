@@ -1,24 +1,5 @@
 .grid {
   display: grid;
+  grid-template-columns: var(--grid-cols, repeat(auto-fill, minmax(var(--grid-min-width, 120px), 1fr)));
+  gap: var(--grid-gap, 1rem);
 }
-
-/* Заготовки для стандартных адаптивных сеток POS-терминала */
-.cols_1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-.cols_2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.cols_3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.cols_4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.cols_5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.cols_6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-.cols_12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
-
-/* Динамическая авто-сетка (идеально для списка блюд в меню или динамических карт) */
-.cols_auto {
-  grid-template-columns: repeat(auto-fill, minmax(var(--grid-min-width, 120px), 1fr));
-}
-
-/* Отступы (Gap) */
-.gap_xs { gap: 0.5rem; }
-.gap_sm { gap: 0.75rem; }
-.gap_md { gap: 1rem; }
-.gap_lg { gap: 1.5rem; }
-.gap_xl { gap: 2rem; }

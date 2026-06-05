@@ -20,7 +20,7 @@ export const StaticTableItem = React.memo(({ table, onClick }: StaticTableItemPr
       direction="col"
       align="center"
       justify="center"
-      className={`${styles.tableItem} ${styles[`shape_${table.shape}`]} ${styles[`status_${table.status}`]}`}
+      className={`${styles.tableItem} ${styles[`shape_${table.shape}`]} pos-status-${table.status}`}
       style={{
         left: `${table.x}%`,
         top: `${table.y}%`,

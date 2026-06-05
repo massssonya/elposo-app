@@ -1,146 +1,143 @@
 .receiptContainer {
-    flex: 1;
-    max-width: 28rem; /* Ограничиваем ширину чека, оставляя больше места под меню */
-    background-color: #111111;
-    border: 1px solid #262626;
-    border-radius: 1.5rem;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  }
-  
-  .header {
-    padding: 1rem 1.5rem;
-    font-size: 1.125rem;
-    font-weight: 700;
-    border-bottom: 1px solid #262626;
-    color: #a3a3a3;
-  }
-  
-  /* Скроллящийся список позиций */
-  .itemsList {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1rem;
-  }
-  
-  .receiptItem {
-    background-color: #171717;
-    border: 1px solid #262626;
-    border-radius: 1rem;
-    padding: 0.75rem 1rem;
-    transition: border-color 0.15s ease;
-  }
-  
-  .receiptItem:hover {
-    border-color: #404040;
-  }
-  
-  .itemInfo {
-    max-width: 60%;
-  }
-  
-  .itemName {
-    font-weight: 600;
-    font-size: 1rem;
-    color: #ffffff;
-    word-break: break-word;
-  }
-  
-  .itemPrice {
-    font-size: 0.875rem;
-    color: #a3a3a3;
-  }
-  
-  /* Управление количеством */
-  .qtyBtn {
-    width: 2.5rem;
-    height: 2.5rem;
-    background-color: #262626;
-    border: 1px solid #404040;
-    border-radius: 0.75rem;
-    color: #ffffff;
-    font-size: 1.25rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.1s ease;
-    user-select: none;
-  }
-  
-  .qtyBtn:active {
-    background-color: #404040;
-    transform: scale(0.95);
-  }
-  
-  .qtyValue {
-    font-size: 1.125rem;
-    font-weight: 700;
-    min-width: 1.5rem;
-    text-align: center;
-  }
-  
-  .deleteBtn {
-    width: 2.5rem;
-    height: 2.5rem;
-    background-color: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    border-radius: 0.75rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.1s ease;
-  }
-  
-  .deleteBtn:active {
-    background-color: rgba(239, 68, 68, 0.3);
-    transform: scale(0.95);
-  }
-  
-  .emptyText {
-    text-align: center;
-    color: #525252;
-    margin-top: 4rem;
-    font-size: 0.95rem;
-    padding: 0 2rem;
-    line-height: 1.4rem;
-  }
-  
-  /* Нижняя панель итогов */
-  .footer {
-    background-color: #171717;
-    border-top: 1px solid #262626;
-    padding: 1.5rem;
-  }
-  
-  .submitBtn {
-    width: 100%;
-    height: 3.5rem;
-    background-color: #10b981;
-    color: #ffffff;
-    border: none;
-    border-radius: 1rem;
-    font-size: 1.125rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.15s ease, transform 0.1s ease;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-  }
-  
-  .submitBtn:hover:not(:disabled) {
-    background-color: #059669;
-  }
-  
-  .submitBtn:active:not(:disabled) {
-    transform: scale(0.98);
-  }
-  
-  .submitBtn:disabled {
-    background-color: #262626;
-    color: #525252;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-  
+  flex: 1;
+  max-width: 28rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.header {
+  padding: 1rem 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-main);
+  color: var(--text-muted);
+}
+
+.itemsList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.receiptItem {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  transition: border-color 0.15s ease;
+}
+
+.receiptItem:hover {
+  border-color: var(--bg-element-hover);
+}
+
+.itemInfo {
+  max-width: 60%;
+}
+
+.itemName {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-main);
+  word-break: break-word;
+}
+
+.itemPrice {
+  font-size: 0.875rem;
+  color: var(--color-price);
+}
+
+.qtyBtn {
+  width: var(--touch-target-sm);
+  height: var(--touch-target-sm);
+  background-color: var(--bg-element);
+  border: 1px solid var(--bg-element-hover);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s ease;
+  user-select: none;
+}
+
+.qtyBtn:active {
+  background-color: var(--bg-element-hover);
+  transform: scale(0.95);
+}
+
+.qtyValue {
+  font-size: 1.125rem;
+  font-weight: 700;
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.deleteBtn {
+  width: var(--touch-target-sm);
+  height: var(--touch-target-sm);
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s ease;
+}
+
+.deleteBtn:active {
+  background-color: var(--color-danger-shadow);
+  transform: scale(0.95);
+}
+
+.emptyText {
+  text-align: center;
+  color: var(--text-disabled);
+  margin-top: 4rem;
+  font-size: 0.95rem;
+  padding: 0 2rem;
+  line-height: 1.4rem;
+}
+
+.footer {
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--border-main);
+  padding: 1.5rem;
+}
+
+.submitBtn {
+  width: 100%;
+  height: var(--touch-target-md);
+  background-color: var(--color-success);
+  color: var(--text-main);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1.125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  box-shadow: 0 4px 12px var(--color-success-shadow);
+}
+
+.submitBtn:hover:not(:disabled) {
+  background-color: #059669;
+}
+
+.submitBtn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.submitBtn:disabled {
+  background-color: var(--bg-element);
+  color: var(--text-disabled);
+  border: 1px solid var(--border-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}

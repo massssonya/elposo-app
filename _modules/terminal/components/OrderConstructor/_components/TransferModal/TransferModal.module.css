@@ -1,7 +1,7 @@
 .subtitle {
   font-size: 0.875rem;
-  color: #737373;
-  margin-top: -0.5rem; /* Сдвигаем чуть выше к шапке новой модалки */
+  color: var(--text-disabled);
+  margin-top: -0.5rem;
   margin-bottom: 1.25rem;
 }
 
@@ -12,22 +12,18 @@
 }
 
 .tableButton {
-  background-color: #171717;
-  border: 1px solid #262626;
-  border-radius: 1rem;
-  height: 4.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-md);
+  height: var(--touch-target-lg);
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.1s ease;
+  transition: transform 0.1s ease, background-color 0.1s ease, border-color 0.1s ease;
 }
 
 .tableButton:hover {
-  border-color: #3b82f6;
-  background-color: #141414;
+  border-color: var(--color-primary);
+  background-color: var(--bg-card-hover);
 }
 
 .tableButton:active {
@@ -36,15 +32,10 @@
 
 .tableLabel {
   font-size: 1.125rem;
-  color: #ffffff;
+  color: var(--text-main);
 }
 
 .tableStatus {
   font-size: 0.75rem;
   font-weight: 400;
 }
-
-.status_FREE { color: #10b981; }
-.status_OCCUPIED { color: #ef4444; }
-.status_CLEANING { color: #a3a3a3; }
-.status_RESERVED { color: #f59e0b; }

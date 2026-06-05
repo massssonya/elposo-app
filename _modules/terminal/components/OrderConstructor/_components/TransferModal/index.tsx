@@ -6,6 +6,7 @@ import { useTableStore } from '@shared/stores/tableStore';
 import { orderOrchestrator } from '@shared/services/orders.service';
 import { Modal } from '@shared/components/UI/Modal';
 import { GridLayout } from '@shared/components/UI/Layout/GridLayout';
+import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 import { TableStatus } from '@shared/types/tables';
 
 import styles from './TransferModal.module.css';
@@ -19,27 +20,21 @@ interface StatusDisplayStrategy {
 export const TABLE_STATUS_STRATEGY: Record<TableStatus, StatusDisplayStrategy> = {
   [TableStatus.FREE]: {
     label: 'Свободен',
-    className: styles.status_FREE,
   },
   [TableStatus.OCCUPIED]: {
     label: 'Занят',
-    className: styles.status_OCCUPIED,
   },
   [TableStatus.CLEANING]: {
     label: 'Уборка',
-    className: styles.status_CLEANING,
   },
   [TableStatus.RESERVED]: {
     label: 'Бронь',
-    className: styles.status_RESERVED,
   },
   [TableStatus.BILL_PAID]: {
     label: 'Счет выдан',
-    className: styles.status_BILL_PAID,
   },
   [TableStatus.OUT_OF_SERVICE]: {
     label: 'Не работает',
-    className: styles.status_OUT_OF_SERVICE,
   },
 };
 
@@ -77,16 +72,20 @@ export function TransferModal({
             const statusConfig = TABLE_STATUS_STRATEGY[table.status];
 
             return(
-              <button
+              <FlexLayout
+                as='button'
+                direction='col'
+                align='center'
+                justify='center'
                 key={table.id}
                 onClick={() => handleSelectTable(table.id)}
                 className={styles.tableButton}
               >
                 <span className={styles.tableLabel}>Стол №{table.number}</span>
-                <span className={`${styles.tableStatus} ${statusConfig.className}`}>
+                <span className={`${styles.tableStatus} pos-status-${table.status}`}>
                   {statusConfig.label}
                 </span>
-              </button>
+              </FlexLayout>
             )
           })}
         </GridLayout>

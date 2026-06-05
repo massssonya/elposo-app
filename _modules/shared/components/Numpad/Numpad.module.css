@@ -3,11 +3,11 @@
   margin-right: auto;
   width: 100%;
   max-width: 24rem;
-  background-color: #171717;
+  background-color: var(--bg-surface);
   padding: 1rem;
-  border-radius: 1.5rem;
+  border-radius: var(--radius-lg);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  border: 1px solid #262626;
+  border: 1px solid var(--border-main);
 }
 
 .grid {
@@ -16,59 +16,67 @@
 
 /* Базовые стили для всех кнопок */
 .btn {
-  height: 5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: var(--touch-target-lg);
   border: none;
-  border-radius: 1rem;
+  border-radius: var(--radius-md);;
   user-select: none;
   touch-action: manipulation;
   cursor: pointer;
   transition: background-color 0.1s ease;
 }
 
+.btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
 /* Цифровые кнопки (0-9) */
 .digitBtn {
   font-size: 1.875rem;
   font-weight: 600;
-  color: #ffffff;
-  background-color: #262626;
+  height: var(--touch-target-lg);
+  background-color: var(--bg-element);
+  color: var(--text-main);
 }
 .digitBtn:hover {
-  background-color: #404040;
+  background-color: var(--bg-element-hover);
 }
 .digitBtn:active {
-  background-color: #525252;
+  background-color: var(--bg-element-active);
 }
+
 .digitBtn:disabled{
-  opacity: .5;
-  pointer-events: none
+  background-color: var(--bg-card);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* Кнопка сброса (С) */
 .clearBtn {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #f87171;
-  background-color: rgba(38, 38, 38, 0.5);
+  color: var(--color-danger);
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
 }
 .clearBtn:hover {
-  background-color: rgba(127, 29, 29, 0.3);
+  background-color: rgba(239, 68, 68, 0.2);
 }
 .clearBtn:active {
-  background-color: rgba(153, 27, 27, 0.4);
+  background-color: var(--color-danger-shadow);
 }
 
 /* Кнопка стереть символ (⌫) */
 .deleteBtn {
   font-size: 1.5rem;
-  color: #fbbf24;
-  background-color: rgba(38, 38, 38, 0.5);
+  color: var(--color-warning);
+  background-color: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.2);
 }
 .deleteBtn:hover {
-  background-color: rgba(120, 53, 4, 0.3);
+  background-color: rgba(245, 158, 11, 0.2);
 }
 .deleteBtn:active {
-  background-color: rgba(146, 64, 14, 0.4);
+  background-color: var(--color-warning-shadow);
 }

@@ -3,9 +3,10 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { useTableStore } from '@shared/stores/tableStore';
 import { StaticZoneCanvas } from './_components/StaticZone';
 import { DynamicZoneCanvas } from './_components/DynamicZone';
+import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout'
+import { useTableStore } from '@shared/stores/tableStore';
 import { Table, TableStatus, HallZone } from '@shared/types/tables';
 import { ROUTES } from '@shared/constants/routes';
 
@@ -66,8 +67,8 @@ export function TableGrid() {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.zoneTabs}>
+    <FlexLayout direction='col' className={styles.container}>
+      <FlexLayout className={styles.zoneTabs}>
         {zones.map((zone) => (
           <button
             key={zone.id}
@@ -77,7 +78,7 @@ export function TableGrid() {
             {zone.name}
           </button>
         ))}
-      </div>
+      </FlexLayout>
 
       {activeZone.isDynamicZone ? (
         <DynamicZoneCanvas
@@ -91,6 +92,6 @@ export function TableGrid() {
           onTableClick={handleTableClick} 
         />
       )}
-    </div>
+    </FlexLayout>
   );
 }

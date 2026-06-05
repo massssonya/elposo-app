@@ -3,39 +3,46 @@
 import React from 'react';
 import styles from './GridLayout.module.css';
 
+const GAP_PRESETS = {
+  xs: '0.5rem',
+  sm: '0.75rem',
+  md: '1rem',
+  lg: '1.5rem',
+  xl: '2rem',
+} as const;
+
 interface GridLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  cols?: 1 | 2 | 3 | 4 | 5 | 6 | 12 | 'auto'; // Фиксированные колонки или авто-заполнение
-  gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  minWidth?: string; // Используется только если cols="auto" (например, "150px")
-  className?: string; // Для возможности точечно докинуть кастомные стили
+  cols?: number | 'auto'; // 🌟 Теперь принимает абсолютно ЛЮБОЕ число колонок!
+  gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | string; // Пресет или кастомная строка (например, "24px")
+  minWidth?: string; // Используется при cols="auto"
 }
 
 export function GridLayout({
   children,
-  cols = 3,
+  cols = 'auto',
   gap = 'md',
-  minWidth,
+  minWidth = '120px',
   className = '',
   style,
   ...props
 }: GridLayoutProps) {
-  // Собираем классы
-  const gridClasses = [
-    styles.grid,
-    styles[`cols_${cols}`],
-    styles[`gap_${gap}`],
-    className
-  ].filter(Boolean).join(' ');
+  
+  const resolvedGap = GAP_PRESETS[gap as keyof typeof GAP_PRESETS] || gap;
 
-  // Передаем переменную min-width в CSS, если выбран авто-режим
-  const customStyle: React.CSSProperties = {
+  const dynamicStyles: React.CSSProperties = {
     ...style,
-    ...(cols === 'auto' && minWidth ? { '--grid-min-width': minWidth } : {}),
+    '--grid-gap': resolvedGap,
+    '--grid-min-width': minWidth,
+    '--grid-cols': typeof cols === 'number' ? `repeat(${cols}, minmax(0, 1fr))` : undefined,
   } as React.CSSProperties;
 
   return (
-    <div className={gridClasses} style={customStyle} {...props}>
+    <div 
+      className={`${styles.grid} ${className}`} 
+      style={dynamicStyles} 
+      {...props}
+    >
       {children}
     </div>
   );

@@ -1,98 +1,97 @@
 .catalogContainer {
-    flex: 2; /* Занимает в 2 раза больше места, чем чек */
-    overflow: hidden;
-    height: 100%;
-  }
-  
-  /* Лента категорий (Горизонтальный скролл) */
-  .categoriesRow {
-    overflow-x: auto;
-    padding-bottom: 0.75rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #171717;
-    /* Прячем дефолтный скроллбар для эстетики терминала */
-    scrollbar-width: none; 
-  }
-  
-  .categoriesRow::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .categoryTab {
-    padding: 0.85rem 1.5rem;
-    background-color: #111111;
-    border: 1px solid #262626;
-    border-radius: 1rem;
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: #a3a3a3;
-    cursor: pointer;
-    white-space: nowrap; /* Запрещаем перенос слов в кнопке */
-    transition: all 0.15s ease;
-  }
-  
-  .categoryTab:hover {
-    border-color: #404040;
-    color: #ffffff;
-  }
-  
-  .catActive {
-    background-color: #3b82f6; /* Синий акцент для активной вкладки меню */
-    border-color: #3b82f6;
-    color: #ffffff;
-    box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
-  }
-  
-  /* Сетка блюд */
-  .itemsGrid {
-    flex: 1;
-    overflow-y: auto;
-    align-content: flex-start; /* Прижимает карточки к верху при неполной сетке */
-    padding-right: 0.25rem; /* Отступ для красивого системного скролла */
-  }
-  
-  .menuCard {
-    background-color: #111111;
-    border: 1px solid #262626;
-    border-radius: 1.25rem;
-    padding: 1.2rem;
-    height: 7.5rem; /* Фиксированная высота для ровных плиток */
-    cursor: pointer;
-    user-select: none;
-    transition: transform 0.1s ease, background-color 0.15s ease, border-color 0.15s ease;
-  }
-  
-  .menuCard:hover {
-    border-color: #404040;
-    background-color: #141414;
-  }
-  
-  .menuCard:active {
-    transform: scale(0.96);
-    background-color: #171717;
-  }
+  flex: 2;
+  overflow: hidden;
+  height: 100%;
+}
 
-  .menuCard:disabled {
-    opacity: .7;
-    pointer-events: none;
-  }
-  
-  .itemName {
-    font-weight: 600;
-    font-size: 1.05rem;
-    line-height: 1.35rem;
-    color: #ffffff;
-    /* Ограничиваем текст двумя строками с троеточием для длинных названий */
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  
-  .itemPrice {
-    font-size: 1.125rem;
-    font-weight: 800;
-    color: #f59e0b; /* Янтарный цвет для ценников блюд */
-    margin-top: auto;
-  }
-  
+.categoriesRow {
+  overflow-x: auto;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-muted);
+  scrollbar-width: none; 
+}
+
+.categoriesRow::-webkit-scrollbar {
+  display: none;
+}
+
+.categoryTab {
+  padding: 0.85rem 1.5rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.categoryTab:hover {
+  border-color: var(--bg-element-hover);
+  color: var(--text-main);
+}
+
+.catActive {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--text-main);
+  box-shadow: 0 0 12px var(--color-primary-shadow);
+}
+
+.itemsGrid {
+  flex: 1;
+  overflow-y: auto;
+  align-content: flex-start;
+  padding-right: 0.25rem;
+}
+
+.menuCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-md); 
+  padding: 1.2rem;
+  height: var(--touch-target-lg);
+  height: 7.5rem; 
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.menuCard:hover {
+  border-color: var(--bg-element-hover);
+  background-color: var(--bg-card-hover); 
+}
+
+.menuCard:active {
+  transform: scale(0.96);
+  background-color: var(--bg-card);
+}
+
+.menuCard:disabled {
+  background-color: var(--bg-card);
+  color: var(--text-disabled);
+  border-color: var(--border-muted);
+  opacity: 0.5; 
+  pointer-events: none;
+}
+
+.itemName {
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.35rem;
+  color: var(--text-main);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.itemPrice {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--text-main);;
+  margin-top: auto;
+}

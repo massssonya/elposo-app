@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { FlexLayout } from '../Layout/FlexLayout'
+import { FlexLayout } from '../UI/Layout/FlexLayout'
 import styles from './Message.module.css';
 
 export type MessageVariant = 'error' | 'success' | 'warning' | 'info';
