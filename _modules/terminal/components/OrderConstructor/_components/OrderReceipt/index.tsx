@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useOrderStore } from '@shared/stores/orderStore';
-import { FlexLayout } from '@shared/components/Layout/FlexLayout';
+import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 
 import styles from './OrderReceipt.module.css';
 

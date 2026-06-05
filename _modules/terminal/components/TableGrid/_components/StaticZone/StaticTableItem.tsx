@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { Table } from '@shared/types/tables';
-import { FlexLayout } from '@shared/components/Layout/FlexLayout'
+import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout'
 
 import styles from './StaticTableItem.module.css';
 

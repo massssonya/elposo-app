@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 
 import { orderOrchestrator } from "@shared/services/orders.service"
-import { GridLayout } from '@shared/components/Layout/GridLayout';
-import { FlexLayout } from '@shared/components/Layout/FlexLayout';
+import { GridLayout } from '@shared/components/UI/Layout/GridLayout';
+import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 import { MenuCategory, MenuItem } from '@shared/types/menu';
 
 import styles from './MenuCatalog.module.css';

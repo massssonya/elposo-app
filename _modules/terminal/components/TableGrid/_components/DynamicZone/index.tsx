@@ -3,8 +3,8 @@
 import React, { useState, useCallback } from 'react';
 
 import { HallZone, Table } from '@shared/types/tables';
-import { FlexLayout } from '@shared/components/Layout/FlexLayout'
-import { GridLayout } from '@shared/components/Layout/GridLayout'
+import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout'
+import { GridLayout } from '@shared/components/UI/Layout/GridLayout'
 import { Numpad } from '@shared/components/Numpad';
 import { useNumpadState } from '@shared/components/Numpad/useNumpadState';
 import { Message } from '@shared/components/Message';
