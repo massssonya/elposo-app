@@ -72,3 +72,9 @@
   color: var(--color-success);
   letter-spacing: 0.02em;
 }
+
+.mainContent {
+  flex: 1;
+  overflow: hidden;
+  padding: 1rem;
+}

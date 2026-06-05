@@ -8,6 +8,7 @@ import { OrderReceipt } from './_components/OrderReceipt';
 import { MenuCatalog } from './_components/MenuCatalog';
 import { TransferModal } from './_components/TransferModal';
 import { useTableStore } from '@shared/stores/tableStore';
+import { useOrderStore } from '@shared/stores/orderStore';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 import { ROUTES } from '@shared/constants/routes';
 
@@ -22,6 +23,8 @@ export function OrderConstructor() {
 
   const currentTable = useTableStore((state) => state.getTableById(tableId));
 
+  const hasItems = useOrderStore((state) => (state.ordersByTable[tableId]?.length || 0) > 0);
+
   const handleSuccessTransfer = (newTableId: string) => {
     setIsTransferOpen(false);
     router.replace(ROUTES.TERMINAL.ORDER(newTableId));
@@ -29,7 +32,6 @@ export function OrderConstructor() {
 
   return (
     <FlexLayout direction="col" className={styles.screen}>
-      {/* Верхний сервисный бар */}
       <FlexLayout justify="between" align="center" className={styles.topBar}>
         <button 
           onClick={() => router.push(ROUTES.TERMINAL.MAIN)} 
@@ -37,18 +39,21 @@ export function OrderConstructor() {
         >
           ← Назад к залу
         </button>
-        <div className={styles.tableTitle}>Оформление заказа — Стол {tableId}</div>
+        <div className={styles.tableTitle}>
+          Оформление заказа — {currentTable?.isDynamic ? 'Трекер' : 'Стол'} №{currentTable?.number || tableId}
+        </div>
 
-        <button 
-          onClick={() => setIsTransferOpen(true)} 
-          className={styles.transferBtn}
-        >
-          🔄 Перенести заказ
-        </button>
+        {hasItems && (
+          <button 
+            onClick={() => setIsTransferOpen(true)} 
+            className={styles.transferBtn}
+          >
+            🔄 Перенести заказ
+          </button>
+        )}
       </FlexLayout>
 
-      {/* Основной двухпанельный лейаут */}
-      <FlexLayout direction="row" gap="lg" className="flex-1 overflow-hidden p-4">
+      <FlexLayout direction="row" gap="lg" className={styles.mainContent}>
         <OrderReceipt tableId={tableId} />
         <MenuCatalog tableId={tableId} />
       </FlexLayout>

@@ -68,7 +68,7 @@ export function TableGrid() {
 
   return (
     <FlexLayout direction='col' className={styles.container}>
-      <FlexLayout className={styles.zoneTabs}>
+      <FlexLayout gap="sm" className={styles.zoneTabs}>
         {zones.map((zone) => (
           <button
             key={zone.id}
