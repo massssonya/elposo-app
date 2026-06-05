@@ -1,7 +1,22 @@
-import { useTableStore } from '@shared/stores/tableStore';
+import { useTableStore, type TableState } from '@shared/stores/tableStore';
 import { useOrderStore } from '@shared/stores/orderStore';
 import type { MenuItem } from '@shared/types/menu';
 import { TableStatus } from '@shared/types/tables';
+
+const sourceTableStrategy = {
+  // Стол динамический -> полностью удаляем его
+  dynamic: (tableId: string, tableStore: TableState) => {
+    tableStore.removeDynamicTable(tableId);
+  },
+  // Стол статичный и был занят -> отправляем на уборку
+  staticOccupied: (tableId: string, tableStore: TableState) => {
+    tableStore.setStatus(tableId, TableStatus.CLEANING);
+  },
+  // Стол статичный и НЕ был занят (бронь, ошибка) -> просто освобождаем
+  staticFree: (tableId: string, tableStore: TableState) => {
+    tableStore.setStatus(tableId, TableStatus.FREE);
+  } 
+}
 
 export const orderOrchestrator = {
   addItemToTableOrder: (tableId: string, item: MenuItem) => {
@@ -24,10 +39,14 @@ export const orderOrchestrator = {
 
     const sourceTable = tableStore.getTableById(fromTableId);
 
-    if (sourceTable && sourceTable.status === TableStatus.OCCUPIED) {
-      tableStore.setStatus(fromTableId, TableStatus.CLEANING);
-    } else {
-      tableStore.setStatus(fromTableId, TableStatus.FREE);
+    if (sourceTable) {
+      const strategyKey = sourceTable.isDynamic
+        ? 'dynamic'
+        : sourceTable.status === TableStatus.OCCUPIED
+        ? 'staticOccupied'
+        : 'staticFree';
+
+      sourceTableStrategy[strategyKey](fromTableId, tableStore);
     }
 
     tableStore.setStatus(toTableId, TableStatus.OCCUPIED);

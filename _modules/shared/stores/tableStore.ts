@@ -1,4 +1,4 @@
-import {create} from "zustand"
+import { create } from "zustand"
 import { persist, createJSONStorage } from 'zustand/middleware'
 import type {HallZone, Table, TableStatus} from "@shared/types/tables"
 import { TableStatus } from "@shared/types/tables"
@@ -9,7 +9,7 @@ const normalizeTableNumber = (num: string): string => {
     return normalized === '' ? '0' : normalized;
   };
 
-interface TableState {
+export interface TableState {
     zones: HallZone[]
     activeZoneId: string | null
     selectedTableId: string | null
@@ -20,7 +20,10 @@ interface TableState {
     setStatus: (tableId: string, status: TableStatus) => void
 
     createDynamicTable: (zoneId: string, tableNumber: string) => { success: boolean; table?: Table; error?: string };
+    removeDynamicTable: (tableId: string) => void;
+
     getTableById: (tableId: string) => Table | undefined;
+    getAvailableTables: (excludeTableId: string) => Table[];
   }
 
 
@@ -100,8 +103,23 @@ export const useTableStore = create<TableState>()(
           return { success: true, table: newTable };
         },
 
+        removeDynamicTable: (tableId) => {
+          set((state) => ({
+            zones: state.zones.map((zone) => ({
+              ...zone,
+              tables: zone.tables.filter((table) => table.id !== tableId),
+            })),
+          }));
+        },
+
         getTableById: (tableId) => {
           return get().zones.flatMap((z) => z.tables).find((t) => t.id === tableId);
+        },
+
+        getAvailableTables: (excludeTableId) => {
+          return get().zones
+            .flatMap((zone) => zone.tables)
+            .filter((table) => table.id !== excludeTableId && !table.isDynamic);
         },
   }),
   {
@@ -110,4 +128,3 @@ export const useTableStore = create<TableState>()(
   }
   )
 )
-
