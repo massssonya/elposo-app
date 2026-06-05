@@ -1,0 +1,50 @@
+.subtitle {
+  font-size: 0.875rem;
+  color: #737373;
+  margin-top: -0.5rem; /* Сдвигаем чуть выше к шапке новой модалки */
+  margin-bottom: 1.25rem;
+}
+
+.tableGridContainer {
+  max-height: 20rem;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.tableButton {
+  background-color: #171717;
+  border: 1px solid #262626;
+  border-radius: 1rem;
+  height: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.tableButton:hover {
+  border-color: #3b82f6;
+  background-color: #141414;
+}
+
+.tableButton:active {
+  transform: scale(0.96);
+}
+
+.tableLabel {
+  font-size: 1.125rem;
+  color: #ffffff;
+}
+
+.tableStatus {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.status_FREE { color: #10b981; }
+.status_OCCUPIED { color: #ef4444; }
+.status_CLEANING { color: #a3a3a3; }
+.status_RESERVED { color: #f59e0b; }
