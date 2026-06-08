@@ -5,14 +5,3 @@
   color: var(--text-main);
   padding: 1.5rem;
 }
-
-.zoneTabs {
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-main);
-  padding-bottom: 0.75rem;
-}
-
-.tabActive {
-  background-color: var(--color-primary);
-  color: var(--text-main);
-}

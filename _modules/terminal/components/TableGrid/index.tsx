@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { StaticZoneCanvas } from './_components/StaticZone';
 import { DynamicZoneCanvas } from './_components/DynamicZone';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout'
-import { Button } from '@shared/components/UI/Button'
+import { TabsGroup } from '@shared/components/UI/TabsGroup'
 import { useTableStore } from '@shared/stores/tableStore';
 import { Table, TableStatus, HallZone } from '@shared/types/tables';
 import { ROUTES } from '@shared/constants/routes';
@@ -69,19 +69,12 @@ export function TableGrid() {
 
   return (
     <FlexLayout direction='col' className={styles.container}>
-      {/* TODO: Сделать универсальный компонент TabsGroup */}
-      <FlexLayout gap="sm" className={styles.zoneTabs}>
-        {zones.map((zone) => (
-          <Button
-            key={zone.id}
-            size="sm"
-            className={`${styles.tab} ${zone.id === activeZoneId ? styles.tabActive : ''}`}
-            onClick={() => setActiveZone(zone.id)}
-          >
-            {zone.name}
-          </Button>
-        ))}
-      </FlexLayout>
+      <TabsGroup
+        items={zones}
+        activeId={activeZoneId}
+        onSelect={setActiveZone}
+        renderLabel={(zone) => zone.name}
+      />
 
       {activeZone.isDynamicZone ? (
         <DynamicZoneCanvas

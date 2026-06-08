@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { orderOrchestrator } from "@shared/services/orders.service"
 import { GridLayout } from '@shared/components/UI/Layout/GridLayout';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
-import { Button } from '@shared/components/UI/Button';
+import { TabsGroup } from '@shared/components/UI/TabsGroup';
 import { MenuCategory, MenuItem } from '@shared/types/menu';
 
 import styles from './MenuCatalog.module.css';
@@ -36,19 +36,14 @@ export function MenuCatalog({ tableId }: Props) {
 
   return (
     <FlexLayout direction="col" className={styles.catalogContainer}>
-      {/* TODO: Сделать универсальный компонент TabsGroup */}
-      <FlexLayout gap="sm" className={styles.categoriesRow}>
-        {MOCK_CATEGORIES.map((cat) => (
-          <Button
-            key={cat.id}
-            size="sm"
-            className={`${styles.categoryTab} ${cat.id === activeCatId ? styles.catActive : ''}`}
-            onClick={() => setActiveCatId(cat.id)}
-          >
-            {cat.name}
-          </Button>
-        ))}
-      </FlexLayout>
+
+      <TabsGroup
+        items={MOCK_CATEGORIES}
+        activeId={activeCatId}
+        onSelect={setActiveCatId}
+        renderLabel={(cat) => cat.name}
+        containerProps={{ className: styles.tabsGroup }}
+      />
 
       <GridLayout cols="auto" minWidth="140px" gap="sm" className={styles.itemsGrid}>
         {filteredItems.map((item) => (
