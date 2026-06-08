@@ -4,6 +4,7 @@ import React from 'react';
 
 import { GridLayout } from '../UI/Layout/GridLayout'
 import { FlexLayout } from '../UI/Layout/FlexLayout'
+import { Button } from '../UI/Button';
 
 import styles from './Numpad.module.css';
 
@@ -26,50 +27,36 @@ export const Numpad = React.memo(({
     <div className={styles.container}>
       <GridLayout cols={3} gap="sm" className={styles.grid}>
         {DIGITS.map((digit) => (
-          <button
+          <Button 
             key={digit}
             type="button"
             disabled={disabled}
+            variant="secondary" 
             onClick={() => onKeyPress(digit)}
             className={`${styles.btn} ${styles.digitBtn}`}
-          >
-            {digit}
-          </button>
+        >
+          {digit}
+        </Button>
         ))}
-
-        <FlexLayout
-          as='button'
-          align='center'
-          justify='center'
-          type="button"
-          onClick={onClear}
-          className={`${styles.btn} ${styles.clearBtn}`}
-        >
+          <Button 
+            type="button"
+            onClick={onClear}
+            className={`${styles.btn} ${styles.clearBtn}`}>
           Сброс
-        </FlexLayout>
-
-        <FlexLayout
-          as='button'
-          align='center'
-          justify='center'
-          type="button"
-          onClick={() => onKeyPress('0')}
-          disabled={disabled}
-          className={`${styles.btn} ${styles.digitBtn}`}
-        >
+        </Button>
+        <Button 
+            type="button"
+            onClick={() => onKeyPress('0')}
+            disabled={disabled}
+            className={`${styles.btn} ${styles.digitBtn}`}>
           0
-        </FlexLayout>
-
-        <FlexLayout
-          as='button'
-          align='center'
-          justify='center'
+        </Button>
+        <Button 
           type="button"
           onClick={onDelete}
-          className={`${styles.btn} ${styles.deleteBtn}`}
-        >
+          className={`${styles.btn} ${styles.deleteBtn}`}>
           ⌫
-        </FlexLayout>
+        </Button>
       </GridLayout>
     </div>
   );

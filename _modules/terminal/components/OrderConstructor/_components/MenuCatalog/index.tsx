@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { orderOrchestrator } from "@shared/services/orders.service"
 import { GridLayout } from '@shared/components/UI/Layout/GridLayout';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
+import { Button } from '@shared/components/UI/Button';
 import { MenuCategory, MenuItem } from '@shared/types/menu';
 
 import styles from './MenuCatalog.module.css';
@@ -13,7 +14,6 @@ interface Props {
   tableId: string;
 }
 
-// Моковые данные для проверки верстки
 const MOCK_CATEGORIES: MenuCategory[] = [
   { id: 'cat_1', name: 'Горячее' },
   { id: 'cat_2', name: 'Напитки' },
@@ -32,25 +32,24 @@ const MOCK_ITEMS: MenuItem[] = [
 export function MenuCatalog({ tableId }: Props) {
   const [activeCatId, setActiveCatId] = useState<string>('cat_1');
 
-  // Фильтруем блюда по выбранной категории
   const filteredItems = MOCK_ITEMS.filter(item => item.categoryId === activeCatId);
 
   return (
     <FlexLayout direction="col" className={styles.catalogContainer}>
-      {/* 📂 Горизонтальная лента категорий меню */}
+      {/* TODO: Сделать универсальный компонент TabsGroup */}
       <FlexLayout gap="sm" className={styles.categoriesRow}>
         {MOCK_CATEGORIES.map((cat) => (
-          <button
+          <Button
             key={cat.id}
+            size="sm"
             className={`${styles.categoryTab} ${cat.id === activeCatId ? styles.catActive : ''}`}
             onClick={() => setActiveCatId(cat.id)}
           >
             {cat.name}
-          </button>
+          </Button>
         ))}
       </FlexLayout>
 
-      {/* 🍔 Адаптивная CSS-Grid сетка блюд */}
       <GridLayout cols="auto" minWidth="140px" gap="sm" className={styles.itemsGrid}>
         {filteredItems.map((item) => (
           <FlexLayout

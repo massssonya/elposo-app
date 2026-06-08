@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useOrderStore } from '@shared/stores/orderStore';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
+import { Button } from '@shared/components/UI/Button';
 import styles from './OrderReceipt.module.css';
 
 interface Props {
@@ -46,10 +47,10 @@ export function OrderReceipt({ tableId }: Props) {
             </FlexLayout>
 
             <FlexLayout align="center" gap="xs">
-              <button onClick={() => updateQuantity(tableId, item.id, -1)} className={styles.qtyBtn}>-</button>
+              <Button size='sm' onClick={() => updateQuantity(tableId, item.id, -1)} className={styles.qtyBtn}>-</Button>
               <span className={styles.qtyValue}>{item.quantity}</span>
-              <button onClick={() => updateQuantity(tableId, item.id, 1)} className={styles.qtyBtn}>+</button>
-              <button onClick={() => removeFromOrder(tableId, item.id)} className={styles.deleteBtn}>🗑️</button>
+              <Button size='sm' onClick={() => updateQuantity(tableId, item.id, 1)} className={styles.qtyBtn}>+</Button>
+              <Button size='sm' onClick={() => removeFromOrder(tableId, item.id)} className={styles.deleteBtn}>🗑️</Button>
             </FlexLayout>
           </FlexLayout>
         ))}
@@ -65,9 +66,9 @@ export function OrderReceipt({ tableId }: Props) {
           <span className={styles.totalAmount}>{totalPrice} ₽</span>
         </FlexLayout>
         
-        <button disabled={currentItems.length === 0} className={styles.submitBtn}>
+        <Button disabled={currentItems.length === 0} className={styles.submitBtn}>
           Отправить на кухню
-        </button>
+        </Button>
       </FlexLayout>
     </FlexLayout>
   );

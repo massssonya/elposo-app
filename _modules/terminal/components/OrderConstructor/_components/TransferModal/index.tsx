@@ -6,7 +6,7 @@ import { useTableStore } from '@shared/stores/tableStore';
 import { orderOrchestrator } from '@shared/services/orders.service';
 import { Modal } from '@shared/components/UI/Modal';
 import { GridLayout } from '@shared/components/UI/Layout/GridLayout';
-import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
+import { Button } from '@shared/components/UI/Button';
 import { TableStatus } from '@shared/types/tables';
 
 import styles from './TransferModal.module.css';
@@ -16,7 +16,6 @@ interface StatusDisplayStrategy {
   className: string;
 }
 
-// для маппинга статусов стола
 export const TABLE_STATUS_STRATEGY: Record<TableStatus, StatusDisplayStrategy> = {
   [TableStatus.FREE]: {
     label: 'Свободен',
@@ -72,11 +71,7 @@ export function TransferModal({
             const statusConfig = TABLE_STATUS_STRATEGY[table.status];
 
             return(
-              <FlexLayout
-                as='button'
-                direction='col'
-                align='center'
-                justify='center'
+              <Button
                 key={table.id}
                 onClick={() => handleSelectTable(table.id)}
                 className={styles.tableButton}
@@ -85,7 +80,7 @@ export function TransferModal({
                 <span className={`${styles.tableStatus} pos-status-${table.status}`}>
                   {statusConfig.label}
                 </span>
-              </FlexLayout>
+              </Button>
             )
           })}
         </GridLayout>

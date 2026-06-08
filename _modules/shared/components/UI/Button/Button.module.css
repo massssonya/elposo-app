@@ -1,0 +1,90 @@
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  }
+  
+  .btn:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  
+  .btn:disabled {
+    background-color: var(--bg-card) !important;
+    color: var(--text-disabled) !important;
+    border: 1px solid var(--border-muted) !important;
+    cursor: not-allowed;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+  
+  .size_sm {
+    height: var(--touch-target-sm);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+  }
+  
+  .size_md {
+    height: var(--touch-target-md);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    border-radius: var(--radius-md);
+  }
+  
+  .size_lg {
+    height: var(--touch-target-lg);
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-radius: var(--radius-md);
+    font-size: 1.125rem;
+  }
+  
+  .variant_primary {
+    background-color: var(--color-success);
+    color: var(--text-main);
+    box-shadow: 0 4px 12px var(--color-success-shadow);
+  }
+  .variant_primary:hover:not(:disabled) {
+    background-color: #059669;
+  }
+  
+  .variant_secondary {
+    background-color: var(--bg-element);
+    border: 1px solid var(--bg-element-hover);
+    color: var(--text-muted);
+  }
+  .variant_secondary:hover:not(:disabled) {
+    background-color: var(--bg-element-hover);
+    color: var(--text-main);
+  }
+  .variant_secondary:active:not(:disabled) {
+    background-color: var(--bg-element-active);
+  }
+  
+  .variant_warning {
+    background-color: var(--color-warning);
+    color: var(--text-main);
+    box-shadow: 0 4px 12px var(--color-warning-shadow);
+  }
+  .variant_warning:hover:not(:disabled) {
+    background-color: #d97706;
+  }
+  
+  .variant_danger {
+    background-color: var(--color-danger);
+    color: var(--text-main);
+    box-shadow: 0 4px 12px var(--color-danger-shadow);
+  }
+  .variant_danger:hover:not(:disabled) {
+    background-color: #b91c1c;
+  }
+  

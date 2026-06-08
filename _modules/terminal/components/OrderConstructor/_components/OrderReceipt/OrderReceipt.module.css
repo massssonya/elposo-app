@@ -53,23 +53,8 @@
 .qtyBtn {
   width: var(--touch-target-sm);
   height: var(--touch-target-sm);
-  background-color: var(--bg-element);
-  border: 1px solid var(--bg-element-hover);
-  border-radius: var(--radius-sm);
   color: var(--text-main);
   font-size: 1.25rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.1s ease;
-  user-select: none;
-}
-
-.qtyBtn:active {
-  background-color: var(--bg-element-hover);
-  transform: scale(0.95);
 }
 
 .qtyValue {
@@ -85,16 +70,15 @@
   background-color: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.2);
   border-radius: var(--radius-sm);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: all 0.1s ease;
 }
 
+.deleteBtn:hover {
+  background-color: rgba(240, 37, 37, 0.452) !important;
+}
+
 .deleteBtn:active {
-  background-color: var(--color-danger-shadow);
-  transform: scale(0.95);
+  background-color: rgba(240, 37, 37, 0.452) !important;
 }
 
 .emptyText {
@@ -113,34 +97,22 @@
 }
 
 .submitBtn {
-  width: 100%;
-  height: var(--touch-target-md);
   background-color: var(--color-success);
   color: var(--text-main);
   border: none;
   border-radius: var(--radius-md);
   font-size: 1.125rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.1s ease;
   box-shadow: 0 4px 12px var(--color-success-shadow);
 }
 
 .submitBtn:hover:not(:disabled) {
-  background-color: #059669;
+  background-color: var(--color-success);
 }
 
-.submitBtn:active:not(:disabled) {
-  transform: scale(0.98);
+.submitBtn:active {
+  background-color: var(--color-success);
 }
 
-.submitBtn:disabled {
-  background-color: var(--bg-element);
-  color: var(--text-disabled);
-  border: 1px solid var(--border-muted);
-  cursor: not-allowed;
-  box-shadow: none;
-}
 
 .totalRow {
   margin-bottom: 1rem;

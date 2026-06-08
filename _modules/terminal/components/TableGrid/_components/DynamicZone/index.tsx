@@ -5,6 +5,7 @@ import React, { useState, useCallback } from 'react';
 import { HallZone, Table } from '@shared/types/tables';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout'
 import { GridLayout } from '@shared/components/UI/Layout/GridLayout'
+import { Button } from '@shared/components/UI/Button'
 import { Numpad } from '@shared/components/Numpad';
 import { useNumpadState } from '@shared/components/Numpad/useNumpadState';
 import { Message } from '@shared/components/Message';
@@ -62,6 +63,7 @@ export const DynamicZoneCanvas = React.memo(({
         <FlexLayout 
           direction="col" 
           gap="sm" 
+          align="center"
           className={styles.dynamicControl}
         >
           <FlexLayout 
@@ -79,13 +81,14 @@ export const DynamicZoneCanvas = React.memo(({
             disabled={tableNumber.length === LIMIT_DYN_INPUT} 
           />
           
-          <button
+          <Button
+            variant='primary'
             disabled={!tableNumber}
             onClick={handleSubmit}
             className={styles.dynamicSubmitButton}
           >
             Открыть заказ
-          </button>
+          </Button>
         </FlexLayout>
 
         <TableList tables={zone.tables} onTableClick={onTableClick} />

@@ -14,48 +14,20 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-/* Базовые стили для всех кнопок */
 .btn {
   height: var(--touch-target-lg);
   border: none;
-  border-radius: var(--radius-md);;
-  user-select: none;
-  touch-action: manipulation;
-  cursor: pointer;
   transition: background-color 0.1s ease;
 }
 
-.btn:active:not(:disabled) {
-  transform: scale(0.96);
-}
-
-/* Цифровые кнопки (0-9) */
 .digitBtn {
   font-size: 1.875rem;
-  font-weight: 600;
   height: var(--touch-target-lg);
-  background-color: var(--bg-element);
   color: var(--text-main);
 }
-.digitBtn:hover {
-  background-color: var(--bg-element-hover);
-}
-.digitBtn:active {
-  background-color: var(--bg-element-active);
-}
 
-.digitBtn:disabled{
-  background-color: var(--bg-card);
-  color: var(--text-disabled);
-  cursor: not-allowed;
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-/* Кнопка сброса (С) */
 .clearBtn {
   font-size: 1.25rem;
-  font-weight: 700;
   color: var(--color-danger);
   background-color: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.2);
@@ -67,7 +39,6 @@
   background-color: var(--color-danger-shadow);
 }
 
-/* Кнопка стереть символ (⌫) */
 .deleteBtn {
   font-size: 1.5rem;
   color: var(--color-warning);

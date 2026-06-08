@@ -10,6 +10,7 @@ import { TransferModal } from './_components/TransferModal';
 import { useTableStore } from '@shared/stores/tableStore';
 import { useOrderStore } from '@shared/stores/orderStore';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
+import { Button } from '@shared/components/UI/Button';
 import { ROUTES } from '@shared/constants/routes';
 
 import styles from './OrderConstructor.module.css';
@@ -33,23 +34,25 @@ export function OrderConstructor() {
   return (
     <FlexLayout direction="col" className={styles.screen}>
       <FlexLayout justify="between" align="center" className={styles.topBar}>
-        <button 
-          onClick={() => router.push(ROUTES.TERMINAL.MAIN)} 
-          className={styles.backBtn}
-        >
-          ← Назад к залу
-        </button>
+        <Button 
+            variant="secondary" 
+            size="sm" 
+            onClick={() => router.push(ROUTES.TERMINAL.MAIN)}
+          >
+            ← Назад к залу
+        </Button>
         <div className={styles.tableTitle}>
-          Оформление заказа — {currentTable?.isDynamic ? 'Трекер' : 'Стол'} №{currentTable?.number || tableId}
+          Оформление заказа — {currentTable?.isDynamic ? 'Трекер' : 'Стол'} №{currentTable?.number}
         </div>
 
         {hasItems && (
-          <button 
-            onClick={() => setIsTransferOpen(true)} 
-            className={styles.transferBtn}
-          >
-            🔄 Перенести заказ
-          </button>
+          <Button 
+            variant="warning" 
+            size="sm" 
+            onClick={() => setIsTransferOpen(true)}
+         >
+           🔄 Перенести заказ
+         </Button>
         )}
       </FlexLayout>
 

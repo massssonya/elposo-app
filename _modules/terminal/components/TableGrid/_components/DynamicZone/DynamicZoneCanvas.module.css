@@ -4,7 +4,7 @@
 }
 
 .dynamicControl {
-  flex: 1;
+  flex: 0.5;
   min-width: 250px;
 }
 
@@ -13,6 +13,7 @@
   border: 1px solid var(--border-main);
   border-radius: var(--radius-md);
   height: var(--touch-target-lg);
+  width: 100%;;
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -40,32 +41,14 @@
 }
 
 .dynamicSubmitButton {
-  height: var(--touch-target-md);
   width: 100%;
   margin-top: 10px;
-  border-radius: var(--radius-md);
-  background-color: var(--color-success);
-  border: none;
-  font-weight: bold;
   font-size: 1.125rem;
   color: var(--text-main);
-  cursor: pointer;
   transition: background-color 0.15s ease, transform 0.1s ease;
   box-shadow: 0 4px 12px var(--color-success-shadow);
 }
 
 .dynamicSubmitButton:hover:not(:disabled) {
   background-color: #059669;
-}
-
-.dynamicSubmitButton:active:not(:disabled) {
-  transform: scale(0.98);
-}
-
-.dynamicSubmitButton:disabled {
-  background-color: var(--bg-element);
-  color: var(--text-disabled);
-  border: 1px solid var(--border-muted);
-  cursor: not-allowed;
-  box-shadow: none;
 }
