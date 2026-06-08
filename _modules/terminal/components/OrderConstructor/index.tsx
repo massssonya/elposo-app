@@ -24,7 +24,7 @@ export function OrderConstructor() {
 
   const currentTable = useTableStore((state) => state.getTableById(tableId));
 
-  const hasItems = useOrderStore((state) => (state.ordersByTable[tableId]?.length || 0) > 0);
+  const hasItems = useOrderStore((state) => (state.ordersByTable[tableId].length || 0) > 0);
 
   const handleSuccessTransfer = (newTableId: string) => {
     setIsTransferOpen(false);
@@ -42,7 +42,7 @@ export function OrderConstructor() {
             ← Назад к залу
         </Button>
         <div className={styles.tableTitle}>
-          Оформление заказа — {currentTable?.isDynamic ? 'Трекер' : 'Стол'} №{currentTable?.number}
+          Оформление заказа — {currentTable.isDynamic ? 'Трекер' : 'Стол'} №{currentTable.number}
         </div>
 
         {hasItems && (

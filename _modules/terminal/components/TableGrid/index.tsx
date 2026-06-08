@@ -2,18 +2,27 @@
 
 import React, { useEffect, useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
-import { StaticZoneCanvas } from './_components/StaticZone';
-import { DynamicZoneCanvas } from './_components/DynamicZone';
-import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout'
-import { TabsGroup } from '@shared/components/UI/TabsGroup'
+import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
+import { TabsGroup } from '@shared/components/UI/TabsGroup';
 import { useTableStore } from '@shared/stores/tableStore';
 import { Table, TableStatus, HallZone } from '@shared/types/tables';
 import { ROUTES } from '@shared/constants/routes';
 
 import styles from './TableGrid.module.css';
 
-const INITIAL_MOCK_ZONES:HallZone[] = [
+const StaticZoneCanvas = dynamic(
+  () => import('./_components/StaticZone').then((mod) => mod.StaticZoneCanvas),
+  { loading: () => <div className={styles.zoneLoader}>Загрузка карты столов...</div> }
+);
+
+const DynamicZoneCanvas = dynamic(
+  () => import('./_components/DynamicZone').then((mod) => mod.DynamicZoneCanvas),
+  { loading: () => <div className={styles.zoneLoader}>Загрузка быстрой выдачи...</div> }
+);
+
+const INITIAL_MOCK_ZONES: HallZone[] = [
   {
     id: 'zone_main',
     name: 'Основной зал',
@@ -40,7 +49,6 @@ export function TableGrid() {
 
   useEffect(() => {
     setIsHydrated(true);
-
     // if(zones.length === 0){
     //   setZones(INITIAL_MOCK_ZONES)
     // }
@@ -48,7 +56,7 @@ export function TableGrid() {
 
   const handleTableClick = useCallback((table: Table) => {
     router.push(ROUTES.TERMINAL.ORDER(table.id));
-  }, []);
+  }, [router]);
 
   const handleCreateDynamicOrder = useCallback((zoneId: string, tableNumber: string) => {
     const result = createDynamicTable(zoneId, tableNumber);
