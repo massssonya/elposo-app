@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
 import { OrderReceipt } from './_components/OrderReceipt';
 import { MenuCatalog } from './_components/MenuCatalog';
-import { TransferModal } from './_components/TransferModal';
+
 import { useTableStore } from '@shared/stores/tableStore';
 import { useOrderStore } from '@shared/stores/orderStore';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
@@ -15,7 +15,12 @@ import { ROUTES } from '@shared/constants/routes';
 
 import styles from './OrderConstructor.module.css';
 
-export function OrderConstructor() {
+const TransferModal = dynamic(
+  () => import('./_components/TransferModal').then((mod) => mod.TransferModal),
+  { ssr: false } 
+);
+
+export default function OrderConstructor() {
   const params = useParams();
   const router = useRouter();
   const tableId = params.id as string;
@@ -23,13 +28,16 @@ export function OrderConstructor() {
   const [isTransferOpen, setIsTransferOpen] = useState(false);
 
   const currentTable = useTableStore((state) => state.getTableById(tableId));
-
-  const hasItems = useOrderStore((state) => (state.ordersByTable[tableId].length || 0) > 0);
+  const hasItems = useOrderStore((state) => state.getTableItems(tableId).length > 0);
 
   const handleSuccessTransfer = (newTableId: string) => {
     setIsTransferOpen(false);
     router.replace(ROUTES.TERMINAL.ORDER(newTableId));
   };
+
+  if (!currentTable) {
+    return <div className={styles.screen}>Загрузка данных заказа...</div>;
+  }
 
   return (
     <FlexLayout direction="col" className={styles.screen}>
@@ -60,15 +68,15 @@ export function OrderConstructor() {
         <OrderReceipt tableId={tableId} />
         <MenuCatalog tableId={tableId} />
       </FlexLayout>
-      {
-        isTransferOpen &&
-          <TransferModal
-            isOpen={isTransferOpen}
-            currentTableId={tableId}
-            onClose={() => setIsTransferOpen(false)}
-            onSuccessTransfer={handleSuccessTransfer}
-          />
-      }
+      
+      {isTransferOpen && (
+        <TransferModal
+          isOpen={isTransferOpen}
+          currentTableId={tableId}
+          onClose={() => setIsTransferOpen(false)}
+          onSuccessTransfer={handleSuccessTransfer}
+        />
+      )}
     </FlexLayout>
   );
 }

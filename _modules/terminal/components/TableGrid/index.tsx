@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
@@ -44,15 +44,13 @@ const INITIAL_MOCK_ZONES: HallZone[] = [
 
 export function TableGrid() {
   const router = useRouter();
-  const [isHydrated, setIsHydrated] = useState(false);
   const { zones, activeZoneId, setZones, setActiveZone, createDynamicTable } = useTableStore();
 
-  useEffect(() => {
-    setIsHydrated(true);
-    // if(zones.length === 0){
-    //   setZones(INITIAL_MOCK_ZONES)
-    // }
-  }, [setZones, zones.length]);
+  // useEffect(() => {
+  //   if(zones.length === 0){
+  //     setZones(INITIAL_MOCK_ZONES)
+  //   }
+  // }, [setZones, zones.length]);
 
   const handleTableClick = useCallback((table: Table) => {
     router.push(ROUTES.TERMINAL.ORDER(table.id));
@@ -71,7 +69,7 @@ export function TableGrid() {
 
   const activeZone = zones.find((z) => z.id === activeZoneId);
 
-  if (!isHydrated || !activeZone) {
+  if (!activeZone) {
     return <div className={styles.container}>Синхронизация карты залов...</div>;
   }
 

@@ -1,13 +1,22 @@
-'use client';
+import React from 'react';
+import dynamic from 'next/dynamic';
 
-import { ActivityProvider } from '@shared/providers/ActivityProvider';
-import { TableGrid } from "@terminal/components/TableGrid"
+const DynamicTerminalContent = dynamic(
+  () => import('@terminal/components/TerminalContent'),
+  {
+    ssr: false,
+    loading: () => (
+      <span>
+          Загрузка интерфейса терминала...
+      </span>
+    ),
+  }
+);
 
 export default function TerminalPage() {
   return (
-  <main className="min-h-screen ">
-    <ActivityProvider timeoutMs={100000}>
-      <TableGrid />
-    </ActivityProvider>
-  </main>);
+    <main>
+      <DynamicTerminalContent />
+    </main>
+  );
 }

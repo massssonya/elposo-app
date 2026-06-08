@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useEffect, useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useOrderStore } from '@shared/stores/orderStore';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 import { Button } from '@shared/components/UI/Button';
+
 import styles from './OrderReceipt.module.css';
 
 interface Props {
@@ -11,8 +12,6 @@ interface Props {
 }
 
 export function OrderReceipt({ tableId }: Props) {
-  const [isHydrated, setIsHydrated] = useState(false);
-
   const updateQuantity = useOrderStore((state) => state.updateQuantity);
   const removeFromOrder = useOrderStore((state) => state.removeFromOrder);
 
@@ -25,14 +24,6 @@ export function OrderReceipt({ tableId }: Props) {
   const totalPrice = useMemo(() => {
     return currentItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }, [currentItems]);
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
-
-  if (!isHydrated) {
-    return <div className={styles.receiptContainer}>Загрузка чека...</div>;
-  }
 
   return (
     <FlexLayout direction="col" className={styles.receiptContainer}>

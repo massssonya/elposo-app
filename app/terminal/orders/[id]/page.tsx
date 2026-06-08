@@ -1,12 +1,21 @@
-'use client';
+import dynamic from 'next/dynamic';
 
-import { OrderConstructor } from '@terminal/components/OrderConstructor';
+const DynamicOrderConstructor = dynamic(
+  () => import('@terminal/components/OrderConstructor'),
+  {
+    ssr: false,
+    loading: () => (
+      <div>
+        Загрузка конструктора заказа...
+      </div>
+    ),
+  }
+);
 
 export default function OrderPage() {
   return (
-    <main className="min-h-screen bg-black overflow-hidden">
-      {/* Тонкий роутер просто вызывает модуль */}
-      <OrderConstructor />
+    <main>
+      <DynamicOrderConstructor />
     </main>
   );
 }
