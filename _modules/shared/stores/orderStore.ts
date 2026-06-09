@@ -8,6 +8,7 @@ interface OrderState {
   addToOrder: (tableId: string, item: MenuItem) => void;
   removeFromOrder: (tableId: string, orderItemId: string) => void;
   updateQuantity: (tableId: string, orderItemId: string, delta: number) => void;
+  updateItemComment: (tableId: string, orderItemId: string, comment: string) => void;
   clearOrder: (tableId: string) => void;
   transferOrder: (fromTableId: string, toTableId: string) => void;
   
@@ -15,13 +16,15 @@ interface OrderState {
   getTotalPrice: (tableId: string) => number;
 }
 
+const INIT_TABLE_ITEMS: OrderItem[] = [];
+
 export const useOrderStore = create<OrderState>()(
     persist(
         (set, get) => ({
             ordersByTable: {},
           
             getTableItems: (tableId) => {
-              return get().ordersByTable[tableId] || [];
+              return get().ordersByTable[tableId] || INIT_TABLE_ITEMS;
             },
           
             addToOrder: (tableId, menuItem) => {
@@ -72,6 +75,21 @@ export const useOrderStore = create<OrderState>()(
                 })
                 .filter((item) => item.quantity > 0);
           
+              set((state) => ({
+                ordersByTable: {
+                  ...state.ordersByTable,
+                  [tableId]: updatedItems,
+                },
+              }));
+            },
+
+            updateItemComment: (tableId, orderItemId, comment) => {
+              const tableItems = get().getTableItems(tableId);
+              const updatedItems = tableItems.map((item) => {
+                if (item.id !== orderItemId) return item;
+                return { ...item, comment };
+              });
+            
               set((state) => ({
                 ordersByTable: {
                   ...state.ordersByTable,
