@@ -13,7 +13,7 @@ export function usePanZoom({ minScale, maxScale, canvasWidth, canvasHeight }: Us
   const containerRef = useRef<HTMLDivElement>(null);
   const dragStart = useRef({ x: 0, y: 0 });
 
-  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
+  const [transform, setTransform] = useState({ x: 0, y: 0, scale: 0.6 });
   const [isDragging, setIsDragging] = useState(false);
 
   const clampCoordinates = useCallback((x: number, y: number, scale: number) => {
