@@ -55,7 +55,7 @@ const INITIAL_MOCK_ZONES: HallZone[] = [
 
 export function TableGrid() {
   const router = useRouter();
-  const { zones, activeZoneId, setZones, setActiveZone, createDynamicTable } = useTableStore();
+  const { zones, activeZoneId, setActiveZone, createDynamicTable } = useTableStore();
 
   const handleTableClick = useCallback((table: Table) => {
     router.push(ROUTES.TERMINAL.ORDER(table.id));

@@ -1,9 +1,15 @@
 'use client';
 
 import { useMemo } from 'react';
+
+import { useOrderReceipt } from './useOrderReceipt';
+import { OrderReceiptCardItem } from './_components/OrderReceiptCardItem'
+import { OrderReceiptFooter } from './_components/OrderReceiptFooter'
+
 import { useOrderStore } from '@shared/stores/orderStore';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 import { Button } from '@shared/components/UI/Button';
+import { OrderItem } from '@shared/types/menu';
 
 import styles from './OrderReceipt.module.css';
 
@@ -12,55 +18,42 @@ interface Props {
 }
 
 export function OrderReceipt({ tableId }: Props) {
-  const updateQuantity = useOrderStore((state) => state.updateQuantity);
-  const removeFromOrder = useOrderStore((state) => state.removeFromOrder);
-
-  const ordersByTable = useOrderStore((state) => state.ordersByTable);
-
-  const currentItems = useMemo(() => {
-    return ordersByTable[tableId] || [];
-  }, [ordersByTable, tableId]);
+  const currentItems = useOrderStore((state) => state.getTableItems(tableId));
 
   const totalPrice = useMemo(() => {
     return currentItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }, [currentItems]);
 
+  const isDisabledSendToKitchen = currentItems.length === 0;
+
   return (
     <FlexLayout direction="col" className={styles.receiptContainer}>
-      <div className={styles.header}>Текущий чек</div>
+      <div className={styles.header}>
+        <h3>Текущий чек</h3>
+      </div>
 
       <FlexLayout direction="col" className={styles.itemsList}>
         {currentItems.map((item) => (
-          <FlexLayout key={item.id} justify="between" align="center" className={styles.receiptItem}>
-            <FlexLayout direction='col' gap='xs' className={styles.itemInfo}>
-              <span className={styles.itemName}>{item.name}</span>
-              <span className={styles.itemPrice}>{item.price} ₽</span>
-            </FlexLayout>
-
-            <FlexLayout align="center" gap="xs">
-              <Button size='sm' onClick={() => updateQuantity(tableId, item.id, -1)} className={styles.qtyBtn}>-</Button>
-              <span className={styles.qtyValue}>{item.quantity}</span>
-              <Button size='sm' onClick={() => updateQuantity(tableId, item.id, 1)} className={styles.qtyBtn}>+</Button>
-              <Button size='sm' onClick={() => removeFromOrder(tableId, item.id)} className={styles.deleteBtn}>🗑️</Button>
-            </FlexLayout>
-          </FlexLayout>
+          <OrderReceiptCardItem 
+            key={item.id} 
+            item={item} 
+            tableId={tableId}
+          />
         ))}
 
-        {currentItems.length === 0 && (
-          <div className={styles.emptyText}>Чек пуст. Выберите блюда из меню справа.</div>
+        {isDisabledSendToKitchen && (
+          <div className={styles.emptyText}>
+            Чек пуст. Выберите блюда из меню справа.
+          </div>
         )}
       </FlexLayout>
 
-      <FlexLayout direction='col' gap="md" className={styles.footer}>
-        <FlexLayout justify="between" align="center" className={styles.totalRow}>
-          <span className={styles.totalLabel}>Итого к оплате:</span>
-          <span className={styles.totalAmount}>{totalPrice} ₽</span>
-        </FlexLayout>
-        
-        <Button disabled={currentItems.length === 0} className={styles.submitBtn}>
-          Отправить на кухню
-        </Button>
-      </FlexLayout>
+      <OrderReceiptFooter 
+        totalPrice={totalPrice} 
+        isDisabledSendToKitchen={isDisabledSendToKitchen} 
+      />
     </FlexLayout>
   );
 }
+
+

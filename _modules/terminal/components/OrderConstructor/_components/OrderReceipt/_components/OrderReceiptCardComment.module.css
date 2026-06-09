@@ -1,0 +1,60 @@
+/* Контейнер для поля ввода (теперь он занимает 100% ширины внизу) */
+.commentSection {
+    width: 100%;
+    margin-top: 0.6rem;
+    display: block; /* Гарантирует перенос на новую строку */
+    animation: fadeInComment 0.15s ease-out;
+  }
+  
+  /* Само текстовое поле */
+  .commentInput {
+    width: 100%;
+    box-sizing: border-box; /* Чтобы padding не раздувал ширину за пределы чека */
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    font-family: inherit;
+    border: 1px solid var(--border-main, #ced4da);
+    border-radius: var(--radius-md, 6px);
+    resize: none;
+    outline: none;
+    background-color: var(--bg-element);
+    color: var(--text-main, #212529);
+    transition: border-color 0.15s ease;
+  }
+  
+  .commentInput:focus {
+    border-color: var(--color-primary, #1c7ed6);
+  }
+  
+  /* Плашка уже сохраненного комментария */
+  .savedCommentBadge {
+    width: 100%;
+    display: block; /* Встает строго под верхним рядом */
+    font-size: 0.8rem;
+    background-color: var(--bg-element);
+    color: var(--text-main, #212529);
+    padding: 0.4rem 0.6rem;
+    border-radius: var(--radius-sm, 4px);
+    margin-top: 0.4rem;
+    font-style: italic;
+    word-break: break-word;
+    box-sizing: border-box;
+  }
+  
+  .commentLabel {
+    font-weight: 700;
+    color: var(--text-main, #212529);
+    font-style: normal;
+    margin-right: 4px;
+  }
+  
+  @keyframes fadeInComment {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
