@@ -1,15 +1,15 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useEffect, memo } from 'react';
 
-import { useOrderReceipt } from './useOrderReceipt';
-import { OrderReceiptCardItem } from './_components/OrderReceiptCardItem'
+import { OrderReceiptGuestGroup } from './_components/OrderReceiptGuestGroup'
 import { OrderReceiptFooter } from './_components/OrderReceiptFooter'
 
 import { useOrderStore } from '@shared/stores/orderStore';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 import { Button } from '@shared/components/UI/Button';
-import { OrderItem } from '@shared/types/menu';
+import { TabsGroup } from '@shared/components/UI/TabsGroup';
+import { useOrderReceipt } from "./useOrderReceipt"
 
 import styles from './OrderReceipt.module.css';
 
@@ -18,29 +18,49 @@ interface Props {
 }
 
 export function OrderReceipt({ tableId }: Props) {
-  const currentItems = useOrderStore((state) => state.getTableItems(tableId));
-
-  const totalPrice = useMemo(() => {
-    return currentItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  }, [currentItems]);
-
-  const isDisabledSendToKitchen = currentItems.length === 0;
+  const {
+    guests,
+    activeGuestId,
+    itemsByGuest,
+    totalPriceByGuest,
+    totalPrice,
+    isDisabledSendToKitchen,
+    handleAddGuest,
+    handleSelectGuest,
+  } = useOrderReceipt({ tableId });
 
   return (
     <FlexLayout direction="col" className={styles.receiptContainer}>
-      <div className={styles.header}>
+      <FlexLayout justify="between" align="center" className={styles.header}>
         <h3>Текущий чек</h3>
-      </div>
+        <Button size="sm" variant="secondary" onClick={handleAddGuest}>
+          👤 + Добавить гостя
+        </Button>
+      </FlexLayout>
+
+      <FlexLayout direction='col' gap="sm" className={styles.guestSelectorBlock}>
+        <span className={styles.selectorLabel}>Сейчас выбирает:</span>
+        <TabsGroup
+          items={guests}
+          activeId={activeGuestId}
+          onSelect={handleSelectGuest}
+          renderLabel={(g) => g.name}
+        />
+      </FlexLayout>
 
       <FlexLayout direction="col" className={styles.itemsList}>
-        {currentItems.map((item) => (
-          <OrderReceiptCardItem 
-            key={item.id} 
-            item={item} 
+
+      {guests.map((guest) => (
+          <OrderReceiptGuestGroup
+            key={guest.id}
+            guest={guest}
+            isActive={guest.id === activeGuestId}
+            guestItems={itemsByGuest[guest.id] || []}
+            guestTotal={totalPriceByGuest[guest.id] || 0}
             tableId={tableId}
           />
         ))}
-
+        
         {isDisabledSendToKitchen && (
           <div className={styles.emptyText}>
             Чек пуст. Выберите блюда из меню справа.
@@ -55,5 +75,3 @@ export function OrderReceipt({ tableId }: Props) {
     </FlexLayout>
   );
 }
-
-

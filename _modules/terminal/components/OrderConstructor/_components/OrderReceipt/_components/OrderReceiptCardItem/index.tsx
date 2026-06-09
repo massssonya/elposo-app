@@ -3,10 +3,9 @@
 import { memo, useState } from 'react';
 
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
-import { Button } from '@shared/components/UI/Button';
 import { OrderItem } from '@shared/types/menu';
-import { OrderReceiptCardActions } from './OrderReceiptCardActions';
-import { OrderReceiptCardComment } from './OrderReceiptCardComment';
+import { OrderReceiptCardActions } from '../OrderReceiptCardActions';
+import { OrderReceiptCardComment } from '../OrderReceiptCardComment';
 
 import styles from './OrderReceiptCardItem.module.css';
 

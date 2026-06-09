@@ -19,6 +19,12 @@ export interface OrderItem {
     name: string;
     price: number;
     quantity: number;
+    guestId: string;
     comment?: string;
   }
+
+export interface OrderGuest {
+  id: string;
+  name: string;
+} 
   

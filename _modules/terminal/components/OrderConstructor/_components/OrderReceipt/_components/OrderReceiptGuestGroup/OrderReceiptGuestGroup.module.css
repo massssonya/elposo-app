@@ -1,0 +1,66 @@
+.guestGroup {
+    border: 1px solid var(--border-main, #e9ecef);
+    border-radius: var(--radius-md, 8px);
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    background-color: var(--bg-surface, #ffffff);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+  
+.guestGroup.activeGroup {
+    border-color: var(--color-primary, #1c7ed6);
+    box-shadow: 0 0 8px rgba(28, 126, 214, 0.12);
+}
+  
+.guestGroupHeader {
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-light, #f1f3f5);
+    padding-bottom: 0.25rem;
+}
+  
+.guestGroupHeader h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text-main, #212529);
+}
+  
+.activeBadge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: var(--color-primary, #1c7ed6);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+  
+.emptyGuestText {
+    font-size: 0.85rem;
+    color: var(--text-muted, #adb5bd);
+    font-style: italic;
+    padding: 0.5rem 0;
+}
+
+.guestGroupFooter {
+    width: 100%;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--border-light, #e9ecef);
+    margin-top: 0.25rem;
+}
+  
+.guestTotalLabel {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted, #868e96);
+}
+  
+.guestTotalAmount {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main, #212529);
+}
+  
+.activeGroup .guestTotalAmount {
+    color: var(--color-primary, #1c7ed6);
+}

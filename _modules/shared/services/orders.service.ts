@@ -23,7 +23,12 @@ export const orderOrchestrator = {
     const tableStore = useTableStore.getState();
     const orderStore = useOrderStore.getState();
 
-    orderStore.addToOrder(tableId, item);
+    const activeGuestId = 
+        orderStore.activeGuestIdByTable[tableId] || 
+        orderStore.getTableGuests(tableId)[0]?.id || 
+        'g_1';
+
+    orderStore.addToOrder(tableId, item, activeGuestId);
 
     const currentTable = tableStore.getTableById(tableId);
 

@@ -1,16 +1,23 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { OrderItem, MenuItem } from '@shared/types/menu';
+import { OrderItem, MenuItem, OrderGuest } from '@shared/types/menu';
 
 interface OrderState {
   ordersByTable: Record<string, OrderItem[]>;
+  guestsByTable: Record<string, OrderGuest[]>;
+  activeGuestIdByTable: Record<string, string>;
   
-  addToOrder: (tableId: string, item: MenuItem) => void;
+  addToOrder: (tableId: string, item: MenuItem, guestId: string) => void;
   removeFromOrder: (tableId: string, orderItemId: string) => void;
   updateQuantity: (tableId: string, orderItemId: string, delta: number) => void;
   updateItemComment: (tableId: string, orderItemId: string, comment: string) => void;
   clearOrder: (tableId: string) => void;
   transferOrder: (fromTableId: string, toTableId: string) => void;
+
+  addGuestToTable: (tableId: string) => string;
+  getTableGuests: (tableId: string) => OrderGuest[];
+  getTableItems: (tableId: string) => OrderItem[];
+  setActiveGuest: (tableId: string, guestId: string) => void;
   
   getTableItems: (tableId: string) => OrderItem[];
   getTotalPrice: (tableId: string) => number;
@@ -18,19 +25,50 @@ interface OrderState {
 
 const INIT_TABLE_ITEMS: OrderItem[] = [];
 
+const DEFAULT_GUESTS_ARRAY: OrderGuest[] = [{ id: 'g_1', name: 'Гость 1' }];
+
 export const useOrderStore = create<OrderState>()(
     persist(
         (set, get) => ({
             ordersByTable: {},
+            guestsByTable: {},
+            activeGuestIdByTable: {},
           
             getTableItems: (tableId) => {
               return get().ordersByTable[tableId] || INIT_TABLE_ITEMS;
             },
+
+            getTableGuests: (tableId) => {
+              const guests = get().guestsByTable[tableId];
+              if (!guests || guests.length === 0) {
+                return DEFAULT_GUESTS_ARRAY;
+              }
+              return guests;
+            },
+
+            addGuestToTable: (tableId) => {
+              const currentGuests = get().getTableGuests(tableId);
+              const nextNumber = currentGuests.length + 1;
+              const newGuest: OrderGuest = {
+                id: `g_${Date.now()}`,
+                name: `Гость ${nextNumber}`,
+              };
+      
+              set((state) => ({
+                guestsByTable: {
+                  ...state.guestsByTable,
+                  [tableId]: [...currentGuests, newGuest],
+                },
+              }));
+      
+              return newGuest.id;
+            },
           
-            addToOrder: (tableId, menuItem) => {
+            addToOrder: (tableId, menuItem, guestId) => {
               const tableItems = get().getTableItems(tableId);
-              const existingItem = tableItems.find((item) => item.menuItemId === menuItem.id);
-          
+              const existingItem = tableItems.find(
+                (item) => item.menuItemId === menuItem.id && item.guestId === guestId
+              );
               let updatedItems: OrderItem[];
           
               if (existingItem) {
@@ -44,6 +82,7 @@ export const useOrderStore = create<OrderState>()(
                   name: menuItem.name,
                   price: menuItem.price,
                   quantity: 1,
+                  guestId,
                 };
                 updatedItems = [...tableItems, newItem];
               }
@@ -133,6 +172,10 @@ export const useOrderStore = create<OrderState>()(
                 return { ordersByTable: updatedOrders };
               });
             },
+
+            setActiveGuest: (tableId, guestId) => set((state) => ({
+              activeGuestIdByTable: { ...state.activeGuestIdByTable, [tableId]: guestId }
+            })),
           
             getTotalPrice: (tableId) => {
               const tableItems = get().getTableItems(tableId);
