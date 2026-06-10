@@ -2,6 +2,7 @@ import { useTableStore, type TableState } from '@shared/stores/tableStore';
 import { useOrderStore } from '@shared/stores/useOrderStore';
 import type { MenuItem } from '@shared/types/menu';
 import { TableStatus } from '@shared/types/tables';
+import { OrderStatus } from '@shared/types/orders';
 
 const sourceTableStrategy = {
   // Стол динамический -> полностью удаляем его
@@ -55,5 +56,31 @@ export const orderOrchestrator = {
     }
 
     tableStore.setStatus(toTableId, TableStatus.OCCUPIED);
+  },
+  cancelOrCloseDraftOrder: (tableId: string) => {
+    const tableStore = useTableStore.getState();
+    const orderStore = useOrderStore.getState();
+
+    const currentStatus = orderStore.getOrderStatus(tableId);
+
+    if (currentStatus !== OrderStatus.DRAFT) {
+      console.warn('Нельзя аннулировать заказ, который уже отправлен на кухню');
+      return { success: false, error: 'Заказ уже готовится' };
+    }
+
+    const currentTable = tableStore.getTableById(tableId);
+
+    orderStore.updateOrderStatus(tableId, OrderStatus.CANCELLED);
+    orderStore.clearOrder(tableId);
+
+    if (currentTable) {
+      if (currentTable.isDynamic) {
+        sourceTableStrategy.dynamic(tableId, tableStore);
+      } else {
+        sourceTableStrategy.staticFree(tableId, tableStore);
+      }
+    }
+
+    return { success: true };
   }
 };
