@@ -4,6 +4,7 @@ import { memo } from 'react';
 
 import { OrderReceiptCardItem } from '../OrderReceiptCardItem'
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
+import { Button } from '@shared/components/UI/Button';
 import type { OrderItem, OrderGuest } from '@shared/types/orders';
 
 import styles from './OrderReceiptGuestGroup.module.css';
@@ -14,9 +15,11 @@ interface GuestGroupProps {
     guestItems: OrderItem[];
     guestTotal: number;
     tableId: string;
+    isOnlyGuest: boolean;
+    removeGuest: () => void
   }
   
-export const OrderReceiptGuestGroup = memo(({ guest, isActive, guestItems, guestTotal, tableId }: GuestGroupProps) => {
+export const OrderReceiptGuestGroup = memo(({ guest, isActive, guestItems, guestTotal, tableId, removeGuest, isOnlyGuest }: GuestGroupProps) => {
     return (
       <div className={`${styles.guestGroup} ${isActive ? styles.activeGroup : ''}`}>
         <FlexLayout justify="between" align="center" className={styles.guestGroupHeader}>
@@ -42,6 +45,8 @@ export const OrderReceiptGuestGroup = memo(({ guest, isActive, guestItems, guest
           <span className={styles.guestTotalAmount}>{guestTotal} ₽</span>
         </FlexLayout>
       )}
+
+      {!isOnlyGuest && <Button size='xs' onClick={removeGuest}>Удалить гостя</Button>}
       </div>
     );
   });

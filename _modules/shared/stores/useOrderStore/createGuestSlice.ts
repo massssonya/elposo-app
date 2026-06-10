@@ -47,4 +47,47 @@ export const createGuestSlice: StateCreator<
 
     return newGuest.id;
   },
+
+  removeGuestFromTable: (tableId, guestId) => {
+    const currentGuests = get().getTableGuests(tableId);
+    
+    if (currentGuests.length <= 1) return;
+
+    const tableItems = get().getTableItems(tableId);
+    const orderStatus = get().getOrderStatus(tableId);
+    
+    const hasItems = tableItems.some((item) => item.guestId === guestId);
+
+    if (hasItems && orderStatus !== OrderStatus.DRAFT) {
+      console.warn('Нельзя удалить гостя с блюдами, если заказ уже отправлен на кухню');
+      return;
+    }
+
+    const updatedGuests = currentGuests.filter((g) => g.id !== guestId);
+
+    set((state) => {
+      const nextActiveGuestIdByTable = { ...state.activeGuestIdByTable };
+      const nextOrdersByTable = { ...state.ordersByTable };
+
+      if (nextActiveGuestIdByTable[tableId] === guestId) {
+        nextActiveGuestIdByTable[tableId] = updatedGuests[0].id;
+      }
+
+      if (hasItems && nextOrdersByTable[tableId]) {
+        nextOrdersByTable[tableId] = {
+          ...nextOrdersByTable[tableId]!,
+          items: tableItems.filter((item) => item.guestId !== guestId),
+        };
+      }
+
+      return {
+        guestsByTable: {
+          ...state.guestsByTable,
+          [tableId]: updatedGuests,
+        },
+        ordersByTable: nextOrdersByTable,
+        activeGuestIdByTable: nextActiveGuestIdByTable,
+      };
+    });
+  },
 });

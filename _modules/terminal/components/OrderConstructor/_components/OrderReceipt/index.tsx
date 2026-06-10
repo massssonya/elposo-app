@@ -27,6 +27,7 @@ export function OrderReceipt({ tableId }: Props) {
     isDisabledSendToKitchen,
     handleAddGuest,
     handleSelectGuest,
+    handleRemoveGuest
   } = useOrderReceipt({ tableId });
 
   return (
@@ -58,6 +59,8 @@ export function OrderReceipt({ tableId }: Props) {
             guestItems={itemsByGuest[guest.id] || []}
             guestTotal={totalPriceByGuest[guest.id] || 0}
             tableId={tableId}
+            removeGuest={() => handleRemoveGuest(guest.id)}
+            isOnlyGuest={guests.length === 1}
           />
         ))}
         

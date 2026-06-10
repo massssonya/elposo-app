@@ -29,6 +29,7 @@ export interface GuestSlice {
   addGuestToTable: (tableId: string) => string;
   setActiveGuest: (tableId: string, guestId: string) => void;
   getTableGuests: (tableId: string) => OrderGuest[];
+  removeGuestFromTable: (tableId: string, guestId: string) => void;
 }
 
 export type OrderStoreState = OrderSlice & GuestSlice;

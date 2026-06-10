@@ -12,6 +12,7 @@ export function useOrderReceipt({ tableId }: UseOrderReceiptProps) {
   const guests = useOrderStore((state) => state.getTableGuests(tableId));
   const addGuestToTable = useOrderStore((state) => state.addGuestToTable);
   const setActiveGuest = useOrderStore((state) => state.setActiveGuest);
+  const removeGuestFromTable = useOrderStore((state) => state.removeGuestFromTable);
 
   const activeGuestId = useOrderStore(
     (state) => state.activeGuestIdByTable[tableId] || guests[0]?.id || 'g_1'
@@ -56,6 +57,10 @@ export function useOrderReceipt({ tableId }: UseOrderReceiptProps) {
     setActiveGuest(tableId, id as string);
   };
 
+  const handleRemoveGuest = (guestId: string) => {
+    removeGuestFromTable(tableId, guestId);
+  };
+
   return {
     guests,
     activeGuestId,
@@ -65,5 +70,6 @@ export function useOrderReceipt({ tableId }: UseOrderReceiptProps) {
     isDisabledSendToKitchen,
     handleAddGuest,
     handleSelectGuest,
+    handleRemoveGuest
   };
 }
