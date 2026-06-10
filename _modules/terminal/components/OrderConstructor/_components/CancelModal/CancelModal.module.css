@@ -1,0 +1,24 @@
+.modalContent {
+    padding: 0.5rem 0;
+  }
+  
+.subtitle {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-main, #212529);
+    margin: 0;
+}
+  
+.btnGroup {
+    margin-top: 1.5rem;
+    width: 100%;
+}
+  
+@media (max-width: 576px) {
+    .btnGroup {
+      flex-direction: column-reverse;
+    }
+    .btnGroup button {
+      width: 100%;
+    }
+}

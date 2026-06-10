@@ -22,12 +22,18 @@ const TransferModal = dynamic(
   { ssr: false } 
 );
 
+const CancelModal = dynamic(
+  () => import('./_components/CancelModal').then((mod) => mod.CancelModal),
+  { ssr: false } 
+);
+
 export default function OrderConstructor() {
   const params = useParams();
   const router = useRouter();
   const tableId = params.id as string;
 
   const [isTransferOpen, setIsTransferOpen] = useState(false);
+  const [isCancelOpen, setIsCancelOpen] = useState(false);
 
   const currentTable = useTableStore((state) => state.getTableById(tableId));
   const hasItems = useOrderStore((state) => state.getTableItems(tableId).length > 0);
@@ -40,21 +46,22 @@ export default function OrderConstructor() {
     setIsTransferOpen(true);
   }, []);
 
+  const handleTransferClose = useCallback(() => setIsTransferOpen(false), []);
+
   const handleSuccessTransfer = useCallback((newTableId: string) => {
     setIsTransferOpen(false);
     router.replace(ROUTES.TERMINAL.ORDER(newTableId));
   }, [router]);
 
-  const handleCancelClick = useCallback(() => {
-    // TODO: Заменить на появление модального окна
-    const confirmCancel = window.confirm("Вы уверены, что хотите аннулировать этот черновик заказа?");
-    if (confirmCancel) {
-      const result = orderOrchestrator.cancelOrCloseDraftOrder(tableId);
-      if (result?.success) {
-        router.push(ROUTES.TERMINAL.MAIN);
-      }
+  const handleCancelOrder = useCallback(() => {
+    const result = orderOrchestrator.cancelOrCloseDraftOrder(tableId);
+    if (result?.success) {
+      router.push(ROUTES.TERMINAL.MAIN);
     }
   }, [tableId, router]);
+
+  const handleCancelOpen = useCallback(() => setIsCancelOpen(true), []);
+  const handleCancelClose = useCallback(() => setIsCancelOpen(false), []);
 
   if (!currentTable) {
     return <div className={styles.screen}>Загрузка данных заказа...</div>;
@@ -67,7 +74,7 @@ export default function OrderConstructor() {
         isDynamic={currentTable.isDynamic}
         hasItems={hasItems}
         onBack={handleBack}
-        onCancel={handleCancelClick}
+        onCancel={handleCancelOpen}
         onTransfer={handleTransferOpen}
       />
 
@@ -80,8 +87,15 @@ export default function OrderConstructor() {
         <TransferModal
           isOpen={isTransferOpen}
           currentTableId={tableId}
-          onClose={() => setIsTransferOpen(false)}
+          onClose={handleTransferClose}
           onSuccessTransfer={handleSuccessTransfer}
+        />
+      )}
+      {isCancelOpen && (
+        <CancelModal
+          isOpen={isCancelOpen}
+          onClose={handleCancelClose}
+          onCancelOrder={handleCancelOrder}
         />
       )}
     </FlexLayout>
