@@ -3,8 +3,8 @@
 import React from 'react';
 import styles from './Button.module.css';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'warning' | 'danger';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonVariant = 'primary' | 'secondary' | 'warning' | 'danger' | 'ghost';
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
 interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   children: React.ReactNode;
