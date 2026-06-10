@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useEffect } from 'react';
-import { useOrderStore } from '@shared/stores/orderStore';
+import { useOrderStore } from '@shared/stores/useOrderStore';
 
 interface UseOrderReceiptProps {
   tableId: string;

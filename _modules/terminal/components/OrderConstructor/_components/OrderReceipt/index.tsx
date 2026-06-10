@@ -5,7 +5,7 @@ import { useMemo, useEffect, memo } from 'react';
 import { OrderReceiptGuestGroup } from './_components/OrderReceiptGuestGroup'
 import { OrderReceiptFooter } from './_components/OrderReceiptFooter'
 
-import { useOrderStore } from '@shared/stores/orderStore';
+import { useOrderStore } from '@shared/stores/useOrderStore';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 import { Button } from '@shared/components/UI/Button';
 import { TabsGroup } from '@shared/components/UI/TabsGroup';

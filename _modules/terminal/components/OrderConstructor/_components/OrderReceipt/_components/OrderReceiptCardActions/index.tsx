@@ -2,7 +2,7 @@
 
 import { memo } from 'react';
 
-import { useOrderStore } from '@shared/stores/orderStore';
+import { useOrderStore } from '@shared/stores/useOrderStore';
 import { Button } from '@shared/components/UI/Button';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 

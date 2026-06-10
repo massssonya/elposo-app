@@ -8,7 +8,7 @@ import { OrderReceipt } from './_components/OrderReceipt';
 import { MenuCatalog } from './_components/MenuCatalog';
 
 import { useTableStore } from '@shared/stores/tableStore';
-import { useOrderStore } from '@shared/stores/orderStore';
+import { useOrderStore } from '@shared/stores/useOrderStore';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 import { Button } from '@shared/components/UI/Button';
 import { ROUTES } from '@shared/constants/routes';

@@ -2,7 +2,7 @@
 
 import { memo } from 'react';
 
-import { useOrderStore } from '@shared/stores/orderStore';
+import { useOrderStore } from '@shared/stores/useOrderStore';
 
 import styles from './OrderReceiptCardComment.module.css';
 

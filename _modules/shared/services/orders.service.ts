@@ -1,5 +1,5 @@
 import { useTableStore, type TableState } from '@shared/stores/tableStore';
-import { useOrderStore } from '@shared/stores/orderStore';
+import { useOrderStore } from '@shared/stores/useOrderStore';
 import type { MenuItem } from '@shared/types/menu';
 import { TableStatus } from '@shared/types/tables';
 
