@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import { useMemo, memo } from 'react';
 
 import { useTableStore } from '@shared/stores/tableStore';
 import { orderOrchestrator } from '@shared/services/orders.service';
@@ -44,12 +44,12 @@ interface TransferModalProps {
   onSuccessTransfer: (newTableId: string) => void;
 }
 
-export function TransferModal({ 
+export const TransferModal = memo(({ 
   isOpen, 
   currentTableId, 
   onClose, 
   onSuccessTransfer 
-}: TransferModalProps) {
+}: TransferModalProps) => {
   const getAvailableTables = useTableStore((state) => state.getAvailableTables);
 
   const availableTables = useMemo(() => {
@@ -87,4 +87,6 @@ export function TransferModal({
       </div>
     </Modal>
   );
-}
+})
+
+TransferModal.displayName = 'TransferModal'
