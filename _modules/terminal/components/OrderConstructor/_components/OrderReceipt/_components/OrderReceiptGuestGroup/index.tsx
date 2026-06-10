@@ -46,7 +46,7 @@ export const OrderReceiptGuestGroup = memo(({ guest, isActive, guestItems, guest
         </FlexLayout>
       )}
 
-      {!isOnlyGuest && <Button size='xs' onClick={removeGuest}>Удалить гостя</Button>}
+      {!isOnlyGuest && <Button size='xs' variant='ghost' onClick={removeGuest} className={styles.removeGuestBtn}>Удалить гостя</Button>}
       </div>
     );
   });
