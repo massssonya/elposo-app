@@ -32,9 +32,23 @@ export const createGuestSlice: StateCreator<
 
   addGuestToTable: (tableId) => {
     const currentGuests = get().getTableGuests(tableId);
-    const nextNumber = currentGuests.length + 1;
+    
+    let maxNumber = 0;
+    
+    currentGuests.forEach((guest) => {
+      const match = guest.name.match(/\d+$/);
+      if (match) {
+        const num = parseInt(match[0], 10);
+        if (num > maxNumber) {
+          maxNumber = num;
+        }
+      }
+    });
+
+    const nextNumber = maxNumber > 0 ? maxNumber + 1 : currentGuests.length + 1;
+
     const newGuest: OrderGuest = {
-      id: `g_${Date.now()}`,
+      id: `g_${Date.now()}_${Math.random().toString(36).substring(2, 5)}`,
       name: `Гость ${nextNumber}`,
     };
 
