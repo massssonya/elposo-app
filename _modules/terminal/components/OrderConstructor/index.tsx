@@ -1,19 +1,14 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { useParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
+
+import { useOrderConstructorModals } from './_hooks/useOrderConstructorModals';
+import { useOrderConstructor } from './_hooks/useOrderConstructor';
 
 import { OrderReceipt } from './_components/OrderReceipt';
 import { MenuCatalog } from './_components/MenuCatalog';
 import { TopBar } from './_components/TopBar';
-
-import { useTableStore } from '@shared/stores/tableStore';
-import { useOrderStore } from '@shared/stores/useOrderStore';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
-import { Button } from '@shared/components/UI/Button';
-import { ROUTES } from '@shared/constants/routes';
-import { orderOrchestrator } from '@shared/services/orders.service'
 
 import styles from './OrderConstructor.module.css';
 
@@ -28,40 +23,16 @@ const CancelModal = dynamic(
 );
 
 export default function OrderConstructor() {
-  const params = useParams();
-  const router = useRouter();
-  const tableId = params.id as string;
+  const modals = useOrderConstructorModals();
 
-  const [isTransferOpen, setIsTransferOpen] = useState(false);
-  const [isCancelOpen, setIsCancelOpen] = useState(false);
-
-  const currentTable = useTableStore((state) => state.getTableById(tableId));
-  const hasItems = useOrderStore((state) => state.getTableItems(tableId).length > 0);
-
-  const handleBack = useCallback(() => {
-    router.push(ROUTES.TERMINAL.MAIN);
-  }, [router]);
-
-  const handleTransferOpen = useCallback(() => {
-    setIsTransferOpen(true);
-  }, []);
-
-  const handleTransferClose = useCallback(() => setIsTransferOpen(false), []);
-
-  const handleSuccessTransfer = useCallback((newTableId: string) => {
-    setIsTransferOpen(false);
-    router.replace(ROUTES.TERMINAL.ORDER(newTableId));
-  }, [router]);
-
-  const handleCancelOrder = useCallback(() => {
-    const result = orderOrchestrator.cancelOrCloseDraftOrder(tableId);
-    if (result?.success) {
-      router.push(ROUTES.TERMINAL.MAIN);
-    }
-  }, [tableId, router]);
-
-  const handleCancelOpen = useCallback(() => setIsCancelOpen(true), []);
-  const handleCancelClose = useCallback(() => setIsCancelOpen(false), []);
+  const {
+    tableId,
+    currentTable,
+    hasItems,
+    handleBack,
+    handleSuccessTransfer,
+    handleCancelOrder,
+  } = useOrderConstructor({ closeTransferModal: modals.transfer.close });
 
   if (!currentTable) {
     return <div className={styles.screen}>Загрузка данных заказа...</div>;
@@ -74,8 +45,8 @@ export default function OrderConstructor() {
         isDynamic={currentTable.isDynamic}
         hasItems={hasItems}
         onBack={handleBack}
-        onCancel={handleCancelOpen}
-        onTransfer={handleTransferOpen}
+        onCancel={modals.cancel.open}
+        onTransfer={modals.transfer.open}
       />
 
       <FlexLayout direction="row" gap="lg" className={styles.mainContent}>
@@ -83,19 +54,19 @@ export default function OrderConstructor() {
         <MenuCatalog tableId={tableId} />
       </FlexLayout>
       
-      {isTransferOpen && (
+      {modals.isTransferOpen && (
         <TransferModal
-          isOpen={isTransferOpen}
-          currentTableId={tableId}
-          onClose={handleTransferClose}
-          onSuccessTransfer={handleSuccessTransfer}
+        isOpen={modals.isTransferOpen}
+        currentTableId={tableId}
+        onClose={modals.transfer.close}
+        onSuccessTransfer={handleSuccessTransfer}
         />
       )}
-      {isCancelOpen && (
+      {modals.isCancelOpen && (
         <CancelModal
-          isOpen={isCancelOpen}
-          onClose={handleCancelClose}
-          onCancelOrder={handleCancelOrder}
+        isOpen={modals.isCancelOpen}
+        onClose={modals.cancel.close}
+        onCancelOrder={handleCancelOrder}
         />
       )}
     </FlexLayout>
