@@ -3,7 +3,7 @@
 import { memo, useState } from 'react';
 
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
-import { OrderItem } from '@shared/types/menu';
+import { OrderItem } from '@shared/types/orders';
 import { OrderReceiptCardActions } from '../OrderReceiptCardActions';
 import { OrderReceiptCardComment } from '../OrderReceiptCardComment';
 

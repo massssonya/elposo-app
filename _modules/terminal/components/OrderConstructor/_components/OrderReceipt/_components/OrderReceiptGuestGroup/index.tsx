@@ -4,7 +4,7 @@ import { memo } from 'react';
 
 import { OrderReceiptCardItem } from '../OrderReceiptCardItem'
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
-import { OrderItem } from '@shared/types/menu';
+import type { OrderItem, OrderGuest } from '@shared/types/orders';
 
 import styles from './OrderReceiptGuestGroup.module.css';
 

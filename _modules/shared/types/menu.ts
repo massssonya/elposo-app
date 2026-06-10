@@ -13,18 +13,3 @@ export interface MenuCategory {
     icon?: string;
   }
   
-export interface OrderItem {
-    id: string;         
-    menuItemId: string; 
-    name: string;
-    price: number;
-    quantity: number;
-    guestId: string;
-    comment?: string;
-  }
-
-export interface OrderGuest {
-  id: string;
-  name: string;
-} 
-  
