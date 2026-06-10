@@ -20,7 +20,7 @@ export function useOrderConstructor({ closeTransferModal }: UseOrderConstructorP
   const hasItems = useOrderStore((state) => state.getTableItems(tableId).length > 0);
 
   const handleBack = useCallback(() => {
-    router.push(ROUTES.TERMINAL.MAIN);
+    router.push(ROUTES.TERMINAL.MAIN());
   }, [router]);
 
   const handleSuccessTransfer = useCallback((newTableId: string) => {
@@ -31,7 +31,7 @@ export function useOrderConstructor({ closeTransferModal }: UseOrderConstructorP
   const handleCancelOrder = useCallback(() => {
     const result = orderOrchestrator.cancelOrCloseDraftOrder(tableId);
     if (result?.success) {
-      router.push(ROUTES.TERMINAL.MAIN);
+      router.push(ROUTES.TERMINAL.MAIN());
     }
   }, [tableId, router]);
 

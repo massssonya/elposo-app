@@ -7,7 +7,7 @@ export function getRedirectPath(permissions: Permission[]): string | null {
     permissions.includes('admin:reports') ||
     permissions.includes('admin:users')
   ) {
-    return ROUTES.ADMIN.DASHBOARD;
+    return ROUTES.ADMIN.DASHBOARD();
   }
 
   // 2. Фронт-офис (Официант / Бармен / Кассир)
@@ -15,12 +15,12 @@ export function getRedirectPath(permissions: Permission[]): string | null {
     permissions.includes('orders:create') ||
     permissions.includes('cash:pay')
   ) {
-    return ROUTES.TERMINAL.MAIN;
+    return ROUTES.TERMINAL.MAIN();
   }
 
   // 3. Производство (Повар)
   if (permissions.includes('kitchen:view')) {
-    return ROUTES.KITCHEN.MAIN;
+    return ROUTES.KITCHEN.MAIN();
   }
 
   // Если у пользователя нет никаких прав для входа в интерфейсы
