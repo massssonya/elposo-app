@@ -1,17 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
 import { OrderReceipt } from './_components/OrderReceipt';
 import { MenuCatalog } from './_components/MenuCatalog';
+import { TopBar } from './_components/TopBar';
 
 import { useTableStore } from '@shared/stores/tableStore';
 import { useOrderStore } from '@shared/stores/useOrderStore';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 import { Button } from '@shared/components/UI/Button';
 import { ROUTES } from '@shared/constants/routes';
+import { orderOrchestrator } from '@shared/services/orders.service'
 
 import styles from './OrderConstructor.module.css';
 
@@ -30,10 +32,29 @@ export default function OrderConstructor() {
   const currentTable = useTableStore((state) => state.getTableById(tableId));
   const hasItems = useOrderStore((state) => state.getTableItems(tableId).length > 0);
 
-  const handleSuccessTransfer = (newTableId: string) => {
+  const handleBack = useCallback(() => {
+    router.push(ROUTES.TERMINAL.MAIN);
+  }, [router]);
+
+  const handleTransferOpen = useCallback(() => {
+    setIsTransferOpen(true);
+  }, []);
+
+  const handleSuccessTransfer = useCallback((newTableId: string) => {
     setIsTransferOpen(false);
     router.replace(ROUTES.TERMINAL.ORDER(newTableId));
-  };
+  }, [router]);
+
+  const handleCancelClick = useCallback(() => {
+    // TODO: Заменить на появление модального окна
+    const confirmCancel = window.confirm("Вы уверены, что хотите аннулировать этот черновик заказа?");
+    if (confirmCancel) {
+      const result = orderOrchestrator.cancelOrCloseDraftOrder(tableId);
+      if (result?.success) {
+        router.push(ROUTES.TERMINAL.MAIN);
+      }
+    }
+  }, [tableId, router]);
 
   if (!currentTable) {
     return <div className={styles.screen}>Загрузка данных заказа...</div>;
@@ -41,28 +62,14 @@ export default function OrderConstructor() {
 
   return (
     <FlexLayout direction="col" className={styles.screen}>
-      <FlexLayout justify="between" align="center" className={styles.topBar}>
-        <Button 
-            variant="secondary" 
-            size="sm" 
-            onClick={() => router.push(ROUTES.TERMINAL.MAIN)}
-          >
-            ← Назад к залу
-        </Button>
-        <div className={styles.tableTitle}>
-          Оформление заказа — {currentTable.isDynamic ? 'Трекер' : 'Стол'} №{currentTable.number}
-        </div>
-
-        {hasItems && (
-          <Button 
-            variant="warning" 
-            size="sm" 
-            onClick={() => setIsTransferOpen(true)}
-         >
-           🔄 Перенести заказ
-         </Button>
-        )}
-      </FlexLayout>
+      <TopBar
+        tableNumber={currentTable.number}
+        isDynamic={currentTable.isDynamic}
+        hasItems={hasItems}
+        onBack={handleBack}
+        onCancel={handleCancelClick}
+        onTransfer={handleTransferOpen}
+      />
 
       <FlexLayout direction="row" gap="lg" className={styles.mainContent}>
         <OrderReceipt tableId={tableId} />
