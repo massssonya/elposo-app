@@ -7,7 +7,7 @@ const DynamicOrderConstructor = dynamic(
   }
 );
 
-export default function OrderPage() {
+export default async function OrderPage() {
   return (
     <main>
       <DynamicOrderConstructor />
