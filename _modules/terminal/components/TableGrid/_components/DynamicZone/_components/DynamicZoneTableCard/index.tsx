@@ -22,7 +22,7 @@ export const DynamicZoneTableCard = memo(({ table, onClick }: TableCardProps) =>
       onClick={() => onClick(table)}
     >
       <span>Стол</span>
-      <span>№{table.number}</span>
+      <span className={styles.cardNumber}>{table.number}</span>
     </FlexLayout>
   );
 });

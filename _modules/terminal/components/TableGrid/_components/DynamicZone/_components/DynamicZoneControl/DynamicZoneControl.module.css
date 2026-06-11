@@ -1,6 +1,9 @@
 .dynamicControl {
-    flex: 0.5;
+    flex: 0 0 320px;
     min-width: 250px;
+    padding: 1.25rem;
+    border-radius: var(--radius-lg, 12px);
+    border: 1px solid var(--border-main, #e9ecef);
 }
   
 .dynamicDisplay {
@@ -8,12 +11,13 @@
     border: 1px solid var(--border-main);
     border-radius: var(--radius-md);
     height: var(--touch-target-lg);
-    width: 100%;;
+    width: 100%;
     font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     color: var(--color-success);
 }
+
   
 .dynamicSubmitButton {
     width: 100%;
