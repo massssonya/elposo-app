@@ -82,5 +82,22 @@ export const orderOrchestrator = {
     }
 
     return { success: true };
+  },
+
+  createDynamicTableAndOrder: (zoneId: string, tableNumber: string) => {
+    const tableStore = useTableStore.getState();
+    const orderStore = useOrderStore.getState();
+
+    const result = tableStore.createDynamicTable(zoneId, tableNumber);
+
+    if (result.success && result.table) {
+      const newTable = result.table;
+
+      orderStore.initTableOrder(newTable.id);
+
+      return { success: true, table: newTable };
+    }
+
+    return { success: false, error: result.error };
   }
 };

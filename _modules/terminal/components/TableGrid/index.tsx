@@ -9,6 +9,7 @@ import { TabsGroup } from '@shared/components/UI/TabsGroup';
 import { useTableStore } from '@shared/stores/tableStore';
 import { Table, TableStatus, HallZone } from '@shared/types/tables';
 import { ROUTES } from '@shared/constants/routes';
+import { orderOrchestrator } from '@shared/services/orders.service';
 
 import styles from './TableGrid.module.css';
 
@@ -62,7 +63,7 @@ export function TableGrid() {
   }, [router]);
 
   const handleCreateDynamicOrder = useCallback((zoneId: string, tableNumber: string) => {
-    const result = createDynamicTable(zoneId, tableNumber);
+    const result = orderOrchestrator.createDynamicTableAndOrder(zoneId, tableNumber);
     
     if (result.success && result.table) {
       router.push(ROUTES.TERMINAL.ORDER(result.table.id));
@@ -70,7 +71,7 @@ export function TableGrid() {
     }
     
     return { success: false, error: result.error };
-  }, [createDynamicTable, router]);
+  }, [router]);
 
   const activeZone = zones.find((z) => z.id === activeZoneId);
 
