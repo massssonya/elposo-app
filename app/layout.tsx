@@ -33,6 +33,7 @@ export default function RootLayout({
     <html lang="ru">
       <body className={inter.className}>
         {children}
+        <div id="popover-root" />
       </body>
     </html>
   );
