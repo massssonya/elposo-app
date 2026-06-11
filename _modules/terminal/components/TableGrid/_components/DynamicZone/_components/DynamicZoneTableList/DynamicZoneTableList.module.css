@@ -1,0 +1,5 @@
+.dynamicList {
+    flex: 2;
+    align-content: flex-start;
+    overflow-y: auto;
+}

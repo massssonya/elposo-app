@@ -1,14 +1,11 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import { memo } from 'react';
 
 import { HallZone, Table } from '@shared/types/tables';
-import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout'
-import { GridLayout } from '@shared/components/UI/Layout/GridLayout'
-import { Button } from '@shared/components/UI/Button'
-import { Numpad } from '@shared/components/Numpad';
-import { useNumpadState } from '@shared/components/Numpad/useNumpadState';
-import { Message } from '@shared/components/Message';
+import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
+import { DynamicZoneControl } from './_components/DynamicZoneControl';
+import { DynamicZoneTableList } from './_components/DynamicZoneTableList';
 
 import styles from './DynamicZoneCanvas.module.css';
 
@@ -21,37 +18,11 @@ interface DynamicZoneCanvasProps {
   ) => { success: boolean; error?: string };
 }
 
-const LIMIT_DYN_INPUT = 3;
-
-export const DynamicZoneCanvas = React.memo(({
+export const DynamicZoneCanvas = memo(({
   zone,
   onTableClick,
   onCreateDynamicOrder,
 }: DynamicZoneCanvasProps) => {
-  const { 
-    value: tableNumber, 
-    error: localError, 
-    resetAll, 
-    resetValue, 
-    setManualError, 
-    numpadProps 
-  } = useNumpadState({
-    maxLength: LIMIT_DYN_INPUT,
-  });
-
-  const handleSubmit = () => {
-    if (!tableNumber) return;
-    
-    const result = onCreateDynamicOrder(zone.id, tableNumber);
-    
-    if (result.success) {
-      resetAll();
-    } else {
-      setManualError(result.error || 'Ошибка создания стола');
-      resetValue();
-    }
-  };
-
   return (
     <div className={styles.canvas}>
       <FlexLayout 
@@ -60,71 +31,18 @@ export const DynamicZoneCanvas = React.memo(({
         align="stretch" 
         className={styles.dynamicLayout}
       >
-        <FlexLayout 
-          direction="col" 
-          gap="sm" 
-          align="center"
-          className={styles.dynamicControl}
-        >
-          <FlexLayout 
-            align="center"
-            justify="center" 
-            className={styles.dynamicDisplay}
-          >
-            {tableNumber || 'Номер столика'}
-          </FlexLayout>
-          
-          <Message text={localError} variant='error' />   
-          
-          <Numpad 
-            {...numpadProps}
-            disabled={tableNumber.length === LIMIT_DYN_INPUT} 
-          />
-          
-          <Button
-            variant='primary'
-            disabled={!tableNumber}
-            onClick={handleSubmit}
-            className={styles.dynamicSubmitButton}
-          >
-            Открыть заказ
-          </Button>
-        </FlexLayout>
+        <DynamicZoneControl 
+          zoneId={zone.id} 
+          onCreateOrder={onCreateDynamicOrder} 
+        />
 
-        <TableList tables={zone.tables} onTableClick={onTableClick} />
+        <DynamicZoneTableList 
+          tables={zone.tables} 
+          onTableClick={onTableClick} 
+        />
       </FlexLayout>
     </div>
   );
 });
 
-interface TableListProps {
-  tables: Table[];
-  onTableClick: (table: Table) => void;
-}
-
-const TableList = React.memo(({ tables, onTableClick }: TableListProps) => {
-  return (
-    <GridLayout 
-      cols="3" 
-      minWidth="110px" 
-      gap="sm"
-      className={styles.dynamicList}
-    >
-      {tables.map((table) => (
-        <FlexLayout 
-          key={table.id} 
-          direction="col"
-          align="center"
-          justify="center"
-          className={`${styles.dynamicCard} pos-status-${table.status}`}
-          onClick={() => onTableClick(table)}
-        >
-          <span>Стол</span>
-          <span className="text-2xl mt-1">№{table.number}</span>
-        </FlexLayout>
-      ))}
-    </GridLayout>
-  );
-});
-
-TableList.displayName = 'TableList';
+DynamicZoneCanvas.displayName = 'DynamicZoneCanvas';
