@@ -9,6 +9,11 @@ const normalizeTableNumber = (num: string): string => {
     return normalized === '' ? '0' : normalized;
   };
 
+interface TableFilters {
+  excludeId?: string;
+  isDynamic?: boolean;
+}
+
 export interface TableState {
     zones: HallZone[]
     activeZoneId: string | null
@@ -23,7 +28,7 @@ export interface TableState {
     removeDynamicTable: (tableId: string) => void;
 
     getTableById: (tableId: string) => Table | undefined;
-    getAvailableTables: (excludeTableId: string) => Table[];
+    getAvailableTables: (filters?: TableFilters) => Table[];
   }
 
 
@@ -103,24 +108,31 @@ export const useTableStore = create<TableState>()(
           return { success: true, table: newTable };
         },
 
-        removeDynamicTable: (tableId) => {
-          set((state) => ({
-            zones: state.zones.map((zone) => ({
-              ...zone,
-              tables: zone.tables.filter((table) => table.id !== tableId),
-            })),
-          }));
-        },
+      removeDynamicTable: (tableId) => {
+        set((state) => ({
+          zones: state.zones.map((zone) => ({
+            ...zone,
+            tables: zone.tables.filter((table) => table.id !== tableId),
+          })),
+        }));
+      },
 
-        getTableById: (tableId) => {
-          return get().zones.flatMap((z) => z.tables).find((t) => t.id === tableId);
-        },
+      getTableById: (tableId) => {
+        return get().zones.flatMap((z) => z.tables).find((t) => t.id === tableId);
+      },
 
-        getAvailableTables: (excludeTableId) => {
-          return get().zones
-            .flatMap((zone) => zone.tables)
-            .filter((table) => table.id !== excludeTableId && !table.isDynamic);
-        },
+      getAvailableTables: (filters?) => {
+        const { excludeId, isDynamic } = filters || {};
+          
+        return get().zones
+          .flatMap((zone) => zone.tables)
+          .filter((table) => {
+            if (excludeId && table.id === excludeId) return false;
+            if (isDynamic !== undefined && table.isDynamic !== isDynamic) return false;
+            if(table.status === TableStatus.OUT_OF_SERVICE) return false;
+            return true;
+          });
+      },
   }),
   {
     name: 'pos-halls-layout',
