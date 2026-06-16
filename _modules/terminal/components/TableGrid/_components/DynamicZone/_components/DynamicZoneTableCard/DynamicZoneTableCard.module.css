@@ -1,23 +1,98 @@
 .dynamicCard {
   background-color: var(--bg-surface, #ffffff);
-  border: 2px solid var(--border-main, #ced4da);
-  border-radius: var(--radius-md, 8px);
-  padding: 1.5rem 1rem;
+  border: 1px solid var(--border-main, #ced4da);
+  border-radius: var(--radius-lg, 12px);
+  padding: 1rem 1.25rem;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
   transition: all 0.15s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  user-select: none;
+}
+
+.dynamicCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: var(--color-primary, #3b82f6);
 }
 
 .dynamicCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  border-color: var(--color-primary, #3b82f6);
 }
   
 .dynamicCard:active {
-    transform: scale(0.96);
+  transform: scale(0.97);
+}
+
+.cardHeader, .cardFooter {
+  width: 100%;
+}
+
+.tableInfo {
+  gap: 2px;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted, #868e96);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .cardNumber {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-main, #212529);
+  line-height: 1.1;
+}
+
+.itemsCountBadge {
+  font-size: 0.8rem;
   font-weight: 700;
-  margin-top: 0.25rem;
+  background-color: #f1f3f5;
+  color: #495057;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+}
+
+.orderStatusLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.timerBadge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #495057;
+  background-color: #f8f9fa;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+}
+
+.timerWarning {
+  color: #f59e0b;
+  background-color: #fffbeb;
+  font-weight: 700;
+}
+
+.timerDanger {
+  color: #ef4444;
+  background-color: #fef2f2;
+  font-weight: 700;
+  animation: pulseDanger 2s infinite;
+}
+
+@keyframes pulseDanger {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }

@@ -16,7 +16,7 @@ interface TableListProps {
 export const DynamicZoneTableList = memo(({ tables, onTableClick }: TableListProps) => {
   return (
     <GridLayout
-      minWidth="110px" 
+      minWidth="210px" 
       gap="sm"
       className={styles.dynamicList}
     >
