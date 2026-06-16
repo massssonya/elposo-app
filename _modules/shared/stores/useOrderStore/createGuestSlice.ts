@@ -1,6 +1,6 @@
 import { StateCreator } from 'zustand';
 import { OrderStoreState, GuestSlice } from './types';
-import { OrderGuest } from '@shared/types/orders';
+import { OrderGuest, OrderStatus } from '@shared/types/orders';
 
 export const DEFAULT_GUESTS_ARRAY: OrderGuest[] = [{ id: 'g_1', name: 'Гость 1' }];
 
