@@ -1,0 +1,105 @@
+.modalContent {
+    height: 100%;
+    max-height: 70vh;
+  }
+  
+.groupsContainer {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+  
+.groupCard {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+  
+.groupHeader {
+  margin-bottom: 12px;
+}
+  
+.groupName {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: #1a1a1a;
+}
+  
+.requiredBadge {
+  font-size: 11px;
+  background-color: #ffebe6;
+  color: #de350b;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+  
+.modifierItem {
+  padding: 12px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+  
+.modifierItem:hover {
+  border-color: #b3b3b3;
+}
+  
+.modifierItem.activeItem {
+  border-color: #0066cc;
+  background-color: #f0f7ff;
+}
+  
+.modifierItem.typeRemove.activeItem {
+  border-color: #de350b;
+  background-color: #fff5f5;
+}
+  
+.modifierItem.typeRemove.activeItem :global(.nativeInput:checked + div) {
+  border-color: #de350b;
+  background-color: #de350b;
+}
+  
+.modifierName {
+  font-size: 14px;
+  color: #333;
+}
+  
+.modifierPrice {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+  
+.typeRemove.activeItem .customInput {
+  border-color: #de350b;
+  background-color: #de350b;
+}
+  
+.footer {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+  
+.submitButton {
+  width: 100%;
+  padding: 14px;
+  background-color: #0066cc;
+  color: white;
+}
+  
+.submitButton:hover:not(:disabled) {
+  background-color: #0052a3;
+}
+  
+.submitButton:disabled {
+  background-color: #e0e0e0;
+  color: #a1a1a1;
+  cursor: not-allowed;
+}
+  
