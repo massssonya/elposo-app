@@ -1,0 +1,65 @@
+.container {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .nativeInput {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .control {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #b3b3b3;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+  
+  .radio {
+    border-radius: 50%;
+  }
+  
+  .checkbox {
+    border-radius: 4px;
+  }
+  
+  .nativeInput:checked + .control {
+    border-color: #0066cc;
+    background-color: #0066cc;
+  }
+
+  .nativeInput:checked + .radio::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .nativeInput:checked + .checkbox::after {
+    content: '✓';
+    position: absolute;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .labelContent {
+    font-size: 14px;
+    color: #333;
+  }
+  
