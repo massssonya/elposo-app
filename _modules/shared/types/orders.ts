@@ -16,9 +16,16 @@ export interface OrderItem {
     quantity: number;
     guestId: string;
     comment?: string;
+    modifiers?: OrderItemModifier[];
   }
 
 export interface OrderGuest {
   id: string;
   name: string;
-} 
+}
+
+export interface OrderItemModifier {
+  id: string;
+  name: string;
+  price: number;
+}

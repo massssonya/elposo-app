@@ -1,6 +1,14 @@
 import { StateCreator } from 'zustand';
+
 import { OrderStoreState, OrderSlice, TableOrder } from './types';
-import { OrderItem, OrderStatus } from '@shared/types/orders';
+import { OrderItem, OrderStatus, OrderItemModifier } from '@shared/types/orders';
+
+const areModifiersEqual = (mods1: OrderItemModifier[] = [], mods2: OrderItemModifier[] = []) => {
+  if (mods1.length !== mods2.length) return false;
+  const ids1 = mods1.map(m => m.id).sort();
+  const ids2 = mods2.map(m => m.id).sort();
+  return ids1.every((id, index) => id === ids2[index]);
+};
 
 export const INIT_TABLE_ITEMS: OrderItem[] = [];
 
@@ -37,7 +45,7 @@ export const createOrderSlice: StateCreator<
     }));
   },
 
-  addToOrder: (tableId, menuItem, guestId) => {
+  addToOrder: (tableId, menuItem, guestId, selectedModifiers = []) => {
     get().initTableOrder(tableId);
     const order = get().ordersByTable[tableId]!;
 
@@ -47,8 +55,12 @@ export const createOrderSlice: StateCreator<
     }
 
     const tableItems = order.items;
+    
     const existingItem = tableItems.find(
-      (item) => item.menuItemId === menuItem.id && item.guestId === guestId
+      (item) => 
+        item.menuItemId === menuItem.id && 
+        item.guestId === guestId &&
+        areModifiersEqual(item.modifiers, selectedModifiers)
     );
 
     let updatedItems: OrderItem[];
@@ -58,13 +70,17 @@ export const createOrderSlice: StateCreator<
         item.id === existingItem.id ? { ...item, quantity: item.quantity + 1 } : item
       );
     } else {
+      const modifiersSum = selectedModifiers.reduce((sum, m) => sum + m.price, 0);
+      const finalPrice = menuItem.price + modifiersSum;
+
       const newItem: OrderItem = {
         id: `oi_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
         menuItemId: menuItem.id,
         name: menuItem.name,
-        price: menuItem.price,
+        price: finalPrice,
         quantity: 1,
         guestId,
+        modifiers: selectedModifiers.length > 0 ? selectedModifiers : undefined,
       };
       updatedItems = [...tableItems, newItem];
     }
@@ -74,7 +90,7 @@ export const createOrderSlice: StateCreator<
         ...state.ordersByTable,
         [tableId]: { ...state.ordersByTable[tableId]!, items: updatedItems },
       },
-    }));
+    }))
   },
 
   removeFromOrder: (tableId, orderItemId) => {
@@ -183,8 +199,12 @@ export const createOrderSlice: StateCreator<
 
     sourceItems.forEach((sourceItem) => {
       const remappedGuestId = guestIdMap[sourceItem.guestId] || sourceItem.guestId;
+      
       const existingItem = mergedItems.find(
-        (item) => item.menuItemId === sourceItem.menuItemId && item.guestId === remappedGuestId
+        (item) => 
+          item.menuItemId === sourceItem.menuItemId && 
+          item.guestId === remappedGuestId &&
+          areModifiersEqual(item.modifiers, sourceItem.modifiers)
       );
 
       if (existingItem) {

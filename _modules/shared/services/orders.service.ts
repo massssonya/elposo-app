@@ -2,7 +2,7 @@ import { useTableStore, type TableState } from '@shared/stores/tableStore';
 import { useOrderStore } from '@shared/stores/useOrderStore';
 import type { MenuItem } from '@shared/types/menu';
 import { TableStatus } from '@shared/types/tables';
-import { OrderStatus } from '@shared/types/orders';
+import { OrderStatus,  OrderItemModifier } from '@shared/types/orders';
 
 const sourceTableStrategy = {
   // Стол динамический -> полностью удаляем его
@@ -20,7 +20,7 @@ const sourceTableStrategy = {
 }
 
 export const orderOrchestrator = {
-  addItemToTableOrder: (tableId: string, item: MenuItem) => {
+  addItemToTableOrder: (tableId: string, item: MenuItem, modifiers: OrderItemModifier[] = []) => {
     const tableStore = useTableStore.getState();
     const orderStore = useOrderStore.getState();
 
@@ -29,7 +29,7 @@ export const orderOrchestrator = {
         orderStore.getTableGuests(tableId)[0]?.id || 
         'g_1';
 
-    orderStore.addToOrder(tableId, item, activeGuestId);
+    orderStore.addToOrder(tableId, item, activeGuestId, modifiers);
 
     const currentTable = tableStore.getTableById(tableId);
 
