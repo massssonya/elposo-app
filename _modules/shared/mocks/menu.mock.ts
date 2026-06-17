@@ -8,12 +8,12 @@ export const MOCK_CATEGORIES = [
 ];
   
 export const MOCK_ITEMS: MenuItem[] = [
-  { id: 'm1', name: 'Бургер Фирменный', price: 450, categoryId: 'cat_1', isAvailable: true, modifierGroupIds: ['g_burger_top', 'g_burger_remove', 'g_sauces'] },
-  { id: 'm2', name: 'Стейк Рибай', price: 1200, categoryId: 'cat_1', isAvailable: true, modifierGroupIds: ['g_cooking', 'g_steak_sauces'] },
-  { id: 'm3', name: 'Капучино 300мл', price: 220, categoryId: 'cat_2', isAvailable: true, modifierGroupIds: ['g_coffee_milk', 'g_coffee_syrup'] },
-  { id: 'm4', name: 'Кола Классик', price: 150, categoryId: 'cat_2', isAvailable: true },
+  { id: 'm1', name: 'Бургер Фирменный', price: 450, categoryId: 'cat_1', isAvailable: true, modifierGroupIds: ['g_burger_top', 'g_burger_remove', 'g_sauces'], imageUrl: 'https://vkuson.com/assets/cache_image/assets/menu/burgers/%D0%93%D0%B0%D0%BC_1500x1066_446.webp' },
+  { id: 'm2', name: 'Стейк Рибай', price: 1200, categoryId: 'cat_1', isAvailable: true, modifierGroupIds: ['g_cooking', 'g_steak_sauces'], imageUrl: 'https://menunedeli.ru/wp-content/uploads/2023/06/2A3866F5-E242-4B97-B336-8BD6AAFDB1AB-933x700.jpeg' },
+  { id: 'm3', name: 'Капучино 300мл', price: 220, categoryId: 'cat_2', isAvailable: true, modifierGroupIds: ['g_coffee_milk', 'g_coffee_syrup'], imageUrl: 'https://latte.ru/wa-data/public/site/img/capp.jpeg' },
+  { id: 'm4', name: 'Кола Классик', price: 150, categoryId: 'cat_2', isAvailable: true, imageUrl: 'https://dostavka-produktov.ru/image/cache/catalog/products_images/3361649-1000x1000.jpg' },
   { id: 'm5', name: 'Чизкейк Нью-Йорк', price: 350, categoryId: 'cat_3', isAvailable: false },
-  { id: 'm6', name: 'Картофель Фри', price: 180, categoryId: 'cat_4', isAvailable: true, modifierGroupIds: ['g_sauces'] },
+  { id: 'm6', name: 'Картофель Фри', price: 180, categoryId: 'cat_4', isAvailable: true, modifierGroupIds: ['g_sauces'], imageUrl: 'https://pizzaexpress44.ru/media/cache/product_popup/images/product/fri-100.jpg' }, 
 ];
   
 export const MODIFIERS: Modifier[] = [
