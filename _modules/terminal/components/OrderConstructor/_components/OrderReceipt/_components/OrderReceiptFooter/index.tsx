@@ -19,8 +19,11 @@ export const OrderReceiptFooter = memo(({ totalPrice, isDisabledSendToKitchen }:
           <span className={styles.totalLabel}>Итого к оплате:</span>
           <span className={styles.totalAmount}>{totalPrice} ₽</span>
         </FlexLayout>
-        
-        <Button disabled={isDisabledSendToKitchen} className={styles.submitBtn}>
+        <Button 
+          disabled={isDisabledSendToKitchen} 
+          variant="primary" 
+          className={styles.submitBtn}
+        >
           Отправить на кухню
         </Button>
       </FlexLayout>
