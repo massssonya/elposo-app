@@ -20,7 +20,7 @@ export const OrderReceiptModifier = ({ name, price, type }: OrderReceiptModifier
             </span>
             {price > 0 && (
                 <span className={styles.modifierPrice}>
-                    {mod.price} ₽
+                    {price} ₽
                 </span>
             )}
         </FlexLayout>
