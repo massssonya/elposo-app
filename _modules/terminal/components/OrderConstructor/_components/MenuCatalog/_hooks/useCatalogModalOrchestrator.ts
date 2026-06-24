@@ -30,6 +30,7 @@ export function useCatalogModalOrchestrator({ tableId }: UseCatalogModalOrchestr
         id: m.id,
         name: m.name,
         price: m.price,
+        type: m.type
       }));
 
       orderOrchestrator.addItemToTableOrder(tableId, item, orderModifiers);

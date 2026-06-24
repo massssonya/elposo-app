@@ -1,3 +1,5 @@
+import type { ModifierType } from './menu';
+
 export enum OrderStatus {
     DRAFT = 'DRAFT',                 // Черновик (официант набирает блюда в терминале, кухня о них еще не знает)
     SENT_TO_KITCHEN = 'SENT_TO_KITCHEN', // Отправлен на кухню (встречки распечатались на поварских принтерах / отобразились на KDS)
@@ -28,4 +30,5 @@ export interface OrderItemModifier {
   id: string;
   name: string;
   price: number;
+  type: ModifierType;
 }

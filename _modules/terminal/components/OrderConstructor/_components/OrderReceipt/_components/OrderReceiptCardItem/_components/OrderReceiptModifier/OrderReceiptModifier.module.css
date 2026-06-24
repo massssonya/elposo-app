@@ -1,0 +1,16 @@
+.modifierItem {
+    font-size: 0.875rem;
+    line-height: 1.15rem;
+    color: var(--text-muted);
+}
+  
+.modifierName {
+    font-weight: 400;
+}
+  
+.modifierPrice {
+    font-weight: 500;
+    white-space: nowrap;
+    margin-left: auto;
+    padding-left: 0.5rem;
+}

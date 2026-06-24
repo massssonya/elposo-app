@@ -13,7 +13,7 @@ export interface MenuCategory {
   icon?: string;
 }
 
-type ModifierType = 'add' | 'remove';
+export type ModifierType = 'add' | 'remove';
   
 export interface Modifier {
   id: string;

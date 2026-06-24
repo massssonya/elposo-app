@@ -4,8 +4,9 @@ import { memo, useState } from 'react';
 
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 import { OrderItem } from '@shared/types/orders';
-import { OrderReceiptCardActions } from '../OrderReceiptCardActions';
-import { OrderReceiptCardComment } from '../OrderReceiptCardComment';
+import { OrderReceiptCardActions } from './_components/OrderReceiptCardActions';
+import { OrderReceiptCardComment } from './_components/OrderReceiptCardComment';
+import { OrderReceiptModifier } from './_components/OrderReceiptModifier';
 
 import styles from './OrderReceiptCardItem.module.css';
 
@@ -35,6 +36,12 @@ export const OrderReceiptCardItem = memo(({ item, tableId }: CardItemProps) => {
           onToggleComment={() => setIsCommentOpen((prev) => !prev)}
         />
       </FlexLayout>
+
+      {item.modifiers && item.modifiers.length > 0 && (
+        <FlexLayout as="ul" direction="col" className={styles.modifiersList}>
+          {item.modifiers.map((mod) => <OrderReceiptModifier key={mod.id} {...mod} />)}
+        </FlexLayout>
+      )}
 
       <OrderReceiptCardComment 
         tableId={tableId}
