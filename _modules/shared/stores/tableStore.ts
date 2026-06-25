@@ -1,6 +1,7 @@
 import { create } from "zustand"
 import { persist, createJSONStorage } from 'zustand/middleware'
-import type {HallZone, Table, TableStatus} from "@shared/types/tables"
+import { MOCK_ZONES } from '@shared/mocks/tables.mock'
+import type { HallZone, Table } from "@shared/types/tables"
 import { TableStatus } from "@shared/types/tables"
 
 const normalizeTableNumber = (num: string): string => {
@@ -35,8 +36,8 @@ export interface TableState {
 export const useTableStore = create<TableState>()(
   persist(
     (set, get) => ({
-      zones: [],
-      activeZoneId: null,
+      zones: MOCK_ZONES,
+      activeZoneId: MOCK_ZONES[0]?.id || null,
       selectedTableId: null,
   
       setZones: (zones) => {
@@ -137,6 +138,19 @@ export const useTableStore = create<TableState>()(
   {
     name: 'pos-halls-layout',
     storage: createJSONStorage(() => localStorage),
+    merge: (persistedState, currentState) => {
+      if (!persistedState) {
+        return {
+          ...currentState,
+          zones: MOCK_ZONES,
+          activeZoneId: MOCK_ZONES[0]?.id || null,
+        };
+      }
+      return {
+        ...currentState,
+        ...(persistedState as Partial<TableState>),
+      };
+    },
   }
   )
 )
