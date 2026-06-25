@@ -3,6 +3,8 @@
 import { useEffect } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
 
+import { Loading } from '@shared/components/Loading'
+
 import styles from './loading.module.css';
 
 const AUTO_CLEAN_PARAMS = ['loading_text'];
@@ -35,11 +37,6 @@ export default function GlobalLoading() {
   }, [pathname]);
 
   return (
-    <div className={styles.overlay}>
-      <div className={styles.container}>
-        <div className={styles.spinner} />
-        <p className={styles.text}>{loadingText}</p>
-      </div>
-    </div>
+    <Loading loadingText={loadingText} />
   );
 }
