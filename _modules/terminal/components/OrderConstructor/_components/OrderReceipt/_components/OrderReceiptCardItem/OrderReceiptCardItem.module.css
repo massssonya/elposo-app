@@ -1,6 +1,9 @@
 .receiptItemWrapper {
-  padding: 0.75rem 0;
+  position: relative;
+  padding: 0.75rem 0 0.75rem 0.75rem;
   width: 100%;
+  border-left: 4px solid;
+  transition: border-color 0.2s ease;
 }
   
 .receiptItemRow {
@@ -29,4 +32,26 @@
   margin: 0.4rem 0 0 0;
   gap: 0.25rem;
   width: 100%;
+}
+
+.statusDraft {
+  border-left-color: var(--color-primary);
+}
+
+.statusKitchen {
+  border-left-color: var(--color-warning);
+}
+
+.statusReady {
+  border-left-color: var(--color-success);
+  background-color: rgba(81, 207, 102, 0.05);
+}
+
+.statusServed {
+  border-left-color: transparent;
+  opacity: 0.6;
+}
+
+.statusCancelled{
+  opacity: 0.6
 }

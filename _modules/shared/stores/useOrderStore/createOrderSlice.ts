@@ -1,7 +1,7 @@
 import { StateCreator } from 'zustand';
 
 import { OrderStoreState, OrderSlice, TableOrder } from './types';
-import { OrderItem, OrderStatus, OrderItemModifier } from '@shared/types/orders';
+import { OrderItem, OrderStatus, OrderItemModifier, OrderItemStatus } from '@shared/types/orders';
 
 const areModifiersEqual = (mods1: OrderItemModifier[] = [], mods2: OrderItemModifier[] = []) => {
   if (mods1.length !== mods2.length) return false;
@@ -49,7 +49,7 @@ export const createOrderSlice: StateCreator<
     get().initTableOrder(tableId);
     const order = get().ordersByTable[tableId]!;
 
-    if (order.status !== OrderStatus.DRAFT && order.status !== OrderStatus.SENT_TO_KITCHEN) {
+    if (order.status !== OrderStatus.DRAFT && order.status !== OrderStatus.IN_PROGRESS) {
       console.warn('Нельзя добавить блюдо в текущем статусе заказа');
       return;
     }
@@ -81,6 +81,7 @@ export const createOrderSlice: StateCreator<
         quantity: 1,
         guestId,
         modifiers: selectedModifiers.length > 0 ? selectedModifiers : undefined,
+        status: OrderItemStatus.DRAFT
       };
       updatedItems = [...tableItems, newItem];
     }
