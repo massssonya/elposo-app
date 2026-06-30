@@ -1,33 +1,45 @@
 .defaultContainer {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 4px;
-    border-radius: 8px;
-  }
-  
-  .defaultButton {
-    padding: 0.85rem 1rem;
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-main);
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.15s ease;
-  }
-  
-  .defaultButton:not(.defaultActive):hover {
-    border-color: var(--bg-element-hover);
-    color: var(--text-main);
-  }
-  
-  .defaultActive {
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
-    color: var(--text-main);
-    box-shadow: 0 0 12px var(--color-primary-shadow);
-  }
-  
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE и Edge */
+  user-select: none; /* Запрещаем выделение текста при скролле */
+  -webkit-user-select: none;
+  touch-action: none; /* Предотвращаем нативные жесты */
+}
+
+/* Скрываем скроллбар для Chrome, Safari и Opera */
+.defaultContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.defaultButton {
+  padding: 0.85rem 1rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  flex-shrink: 0; /* Предотвращаем сжатие кнопок */
+}
+
+.defaultButton:not(.defaultActive):hover {
+  border-color: var(--bg-element-hover);
+  color: var(--text-main);
+}
+
+.defaultActive {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--text-main);
+  box-shadow: 0 0 12px var(--color-primary-shadow);
+}
