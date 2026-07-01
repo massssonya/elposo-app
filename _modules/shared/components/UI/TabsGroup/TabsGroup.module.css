@@ -6,14 +6,13 @@
   border-radius: 8px;
   overflow-x: auto;
   overflow-y: hidden;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE и Edge */
-  user-select: none; /* Запрещаем выделение текста при скролле */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  user-select: none;
   -webkit-user-select: none;
-  touch-action: none; /* Предотвращаем нативные жесты */
+  touch-action: none;
 }
 
-/* Скрываем скроллбар для Chrome, Safari и Opera */
 .defaultContainer::-webkit-scrollbar {
   display: none;
 }
@@ -29,7 +28,7 @@
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.15s ease;
-  flex-shrink: 0; /* Предотвращаем сжатие кнопок */
+  flex-shrink: 0;
 }
 
 .defaultButton:not(.defaultActive):hover {
