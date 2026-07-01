@@ -3,7 +3,7 @@
 import { useMemo, memo, useState } from 'react';
 
 import { useTableStore } from '@shared/stores/tableStore';
-import { orderOrchestrator } from '@shared/services/orders.service';
+import { OrderOrchestrator } from "@shared/orchestrators";
 import { Modal } from '@shared/components/UI/Modal';
 import { GridLayout } from '@shared/components/UI/Layout/GridLayout';
 import { Button } from '@shared/components/UI/Button';
@@ -72,7 +72,7 @@ export const TransferModal = memo(({
   }, [activeCatId, getAvailableTables]);
 
   const handleSelectTable = (targetTableId: string) => {
-    orderOrchestrator.transferOrder(currentTableId, targetTableId);
+    OrderOrchestrator.transferOrder(currentTableId, targetTableId);
     onSuccessTransfer(targetTableId);
   };
 

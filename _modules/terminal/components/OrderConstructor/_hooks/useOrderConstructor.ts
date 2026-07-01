@@ -3,8 +3,8 @@
 import { useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useTableStore } from '@shared/stores/tableStore';
-import { useOrderStore } from '@shared/stores/useOrderStore';
-import { orderOrchestrator } from '@shared/services/orders.service';
+import { useOrderManager } from '@shared/hooks';
+import { OrderOrchestrator } from "@shared/orchestrators";
 import { ROUTES } from '@shared/constants/routes';
 
 interface UseOrderConstructorProps {
@@ -17,8 +17,8 @@ export function useOrderConstructor({ closeTransferModal }: UseOrderConstructorP
   const tableId = params.id as string;
 
   const currentTable = useTableStore((state) => state.getTableById(tableId));
-  const hasItems = useOrderStore((state) => state.getTableItems(tableId).length > 0);
-
+  const { items } = useOrderManager(tableId)
+  const hasItems = items.length > 0;
   const handleBack = useCallback(() => {
     router.push(ROUTES.TERMINAL.MAIN());
   }, [router]);
@@ -29,7 +29,7 @@ export function useOrderConstructor({ closeTransferModal }: UseOrderConstructorP
   }, [router, closeTransferModal]);
 
   const handleCancelOrder = useCallback(() => {
-    const result = orderOrchestrator.cancelOrCloseDraftOrder(tableId);
+    const result = OrderOrchestrator.cancelOrCloseDraftOrder(tableId);
     if (result?.success) {
       router.push(ROUTES.TERMINAL.MAIN());
     }

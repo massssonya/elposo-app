@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { orderOrchestrator } from "@shared/services/orders.service";
+import { OrderOrchestrator } from "@shared/orchestrators";
 import { MenuItem, Modifier } from '@shared/types/menu';
 import { MOCK_ITEMS } from '@shared/mocks/menu.mock';
 
@@ -17,7 +17,7 @@ export function useCatalogModalOrchestrator({ tableId }: UseCatalogModalOrchestr
     if (item.modifierGroupIds && item.modifierGroupIds.length > 0) {
       setSelectedItemId(item.id);
     } else {
-      orderOrchestrator.addItemToTableOrder(tableId, item);
+      OrderOrchestrator.addItemToTableOrder(tableId, item);
     }
   };
 
@@ -33,7 +33,7 @@ export function useCatalogModalOrchestrator({ tableId }: UseCatalogModalOrchestr
         type: m.type
       }));
 
-      orderOrchestrator.addItemToTableOrder(tableId, item, orderModifiers);
+      OrderOrchestrator.addItemToTableOrder(tableId, item, orderModifiers);
     }
     
     closeModificatorModal();

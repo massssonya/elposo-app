@@ -9,7 +9,7 @@ import { TabsGroup } from '@shared/components/UI/TabsGroup';
 import { useTableStore } from '@shared/stores/tableStore';
 import { Table } from '@shared/types/tables';
 import { ROUTES } from '@shared/constants/routes';
-import { orderOrchestrator } from '@shared/services/orders.service';
+import { OrderOrchestrator } from "@shared/orchestrators";
 
 import styles from './TableGrid.module.css';
 
@@ -32,7 +32,7 @@ export function TableGrid() {
   }, [router]);
 
   const handleCreateDynamicOrder = useCallback((zoneId: string, tableNumber: string) => {
-    const result = orderOrchestrator.createDynamicTableAndOrder(zoneId, tableNumber);
+    const result = OrderOrchestrator.createDynamicTableAndOrder(zoneId, tableNumber);
     
     if (result.success && result.table) {
       router.push(ROUTES.TERMINAL.ORDER(result.table.id));

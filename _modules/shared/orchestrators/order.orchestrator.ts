@@ -1,35 +1,56 @@
 import { useTableStore, type TableState } from '@shared/stores/tableStore';
-import { useOrderStore } from '@shared/stores/useOrderStore';
+import { useOrderStore } from '@shared/stores/orderStore';
+import { useOrderManager, useOrderFacade } from '@shared/hooks';
+
 import type { MenuItem } from '@shared/types/menu';
 import { TableStatus } from '@shared/types/tables';
 import { OrderStatus,  OrderItemModifier } from '@shared/types/orders';
 
 const sourceTableStrategy = {
-  // Стол динамический -> полностью удаляем его
   dynamic: (tableId: string, tableStore: TableState) => {
     tableStore.removeDynamicTable(tableId);
   },
-  // Стол статичный и был занят -> отправляем на уборку
   staticOccupied: (tableId: string, tableStore: TableState) => {
     tableStore.setStatus(tableId, TableStatus.CLEANING);
   },
-  // Стол статичный и НЕ был занят (бронь, ошибка) -> просто освобождаем
   staticFree: (tableId: string, tableStore: TableState) => {
     tableStore.setStatus(tableId, TableStatus.FREE);
-  } 
+  },
+  staticCleaning: (tableId: string, tableStore: TableState) => {
+    tableStore.setStatus(tableId, TableStatus.FREE);
+  }
 }
 
-export const orderOrchestrator = {
+const getTableStrategy = (table: any): keyof typeof sourceTableStrategy => {
+  if (table.isDynamic) return 'dynamic';
+  
+  switch (table.status) {
+    case TableStatus.OCCUPIED:
+      return 'staticOccupied';
+    case TableStatus.CLEANING:
+      return 'staticCleaning';
+    default:
+      return 'staticFree';
+  }
+};
+
+export const OrderOrchestrator = {
   addItemToTableOrder: (tableId: string, item: MenuItem, modifiers: OrderItemModifier[] = []) => {
     const tableStore = useTableStore.getState();
     const orderStore = useOrderStore.getState();
+    const orderFacade = useOrderFacade();
 
-    const activeGuestId = 
-        orderStore.activeGuestIdByTable[tableId] || 
-        orderStore.getTableGuests(tableId)[0]?.id || 
-        'g_1';
+    let activeGuestId = orderStore.activeGuestIdByTable[tableId];
+    if (!activeGuestId) {
+      const guests = orderStore.getTableGuests(tableId);
+      activeGuestId = guests[0]?.id || 'g_1';
+      
+      if (guests[0]?.id) {
+        orderStore.setActiveGuest(tableId, guests[0].id);
+      }
+    }
 
-    orderStore.addToOrder(tableId, item, activeGuestId, modifiers);
+    orderStore.addOrderItem(tableId, item, activeGuestId, modifiers);
 
     const currentTable = tableStore.getTableById(tableId);
 
@@ -37,26 +58,54 @@ export const orderOrchestrator = {
       tableStore.setStatus(tableId, TableStatus.OCCUPIED);
     }
   },
+
   transferOrder: (fromTableId: string, toTableId: string) => {
     const tableStore = useTableStore.getState();
-    const orderStore = useOrderStore.getState();
+    const orderFacade = useOrderFacade();
 
-    orderStore.transferOrder(fromTableId, toTableId);
+    if (fromTableId === toTableId) {
+      console.warn('Нельзя перенести заказ на тот же стол');
+      return { success: false, error: 'Столы должны быть разными' };
+    }
+
+    const orderStore = useOrderStore.getState();
+    const sourceOrder = orderStore.getOrderByTable(fromTableId);
+    
+    if (!sourceOrder || sourceOrder.items.length === 0) {
+      console.warn(`Нет заказа для переноса со стола ${fromTableId}`);
+      return { success: false, error: 'Нет заказа для переноса' };
+    }
+
+    const targetTable = tableStore.getTableById(toTableId);
+    if (!targetTable) {
+      console.warn(`Целевой стол ${toTableId} не найден`);
+      return { success: false, error: 'Целевой стол не найден' };
+    }
+
+    try {
+      orderFacade.transferOrder(fromTableId, toTableId);
+    } catch (error) {
+      console.error('Ошибка при переносе заказа:', error);
+      return { success: false, error: error.message };
+    }
 
     const sourceTable = tableStore.getTableById(fromTableId);
 
     if (sourceTable) {
-      const strategyKey = sourceTable.isDynamic
-        ? 'dynamic'
-        : sourceTable.status === TableStatus.OCCUPIED
-        ? 'staticOccupied'
-        : 'staticFree';
-
-      sourceTableStrategy[strategyKey](fromTableId, tableStore);
+      const strategy = getTableStrategy(sourceTable);
+      sourceTableStrategy[strategy](fromTableId, tableStore);
     }
 
-    tableStore.setStatus(toTableId, TableStatus.OCCUPIED);
+    if (targetTable) {
+      if (targetTable.status === TableStatus.FREE || 
+          targetTable.status === TableStatus.CLEANING) {
+        tableStore.setStatus(toTableId, TableStatus.OCCUPIED);
+      }
+    }
+
+    return { success: true };
   },
+  
   cancelOrCloseDraftOrder: (tableId: string) => {
     const tableStore = useTableStore.getState();
     const orderStore = useOrderStore.getState();

@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 
-import { useOrderStore } from '@shared/stores/useOrderStore';
+import { useOrderStore } from '@shared/stores/orderStore';
 import { Table } from '@shared/types/tables';
 
 interface UseTableCardProps {

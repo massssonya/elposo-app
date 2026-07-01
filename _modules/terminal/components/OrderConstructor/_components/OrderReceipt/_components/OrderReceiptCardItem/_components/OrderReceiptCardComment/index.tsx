@@ -2,7 +2,7 @@
 
 import { memo } from 'react';
 
-import { useOrderStore } from '@shared/stores/useOrderStore';
+import { useOrderManager } from '@shared/hooks';
 
 import styles from './OrderReceiptCardComment.module.css';
 
@@ -14,7 +14,7 @@ interface CardCommentProps {
 }
 
 export const OrderReceiptCardComment = memo(({ tableId, itemId, comment, isOpen }: CardCommentProps) => {
-  const updateItemComment = useOrderStore((state) => state.updateItemComment);
+  const { updateComment: updateOrderItemComment } = useOrderManager(tableId)
 
   if (!isOpen && !comment) return null;
 
@@ -32,7 +32,7 @@ export const OrderReceiptCardComment = memo(({ tableId, itemId, comment, isOpen 
             className={styles.commentInput}
             placeholder="Пожелания к блюду..."
             value={comment || ''}
-            onChange={(e) => updateItemComment(tableId, itemId, e.target.value)}
+            onChange={(e) => updateOrderItemComment(itemId, e.target.value)}
             rows={2}
             autoFocus
           />

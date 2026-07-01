@@ -2,7 +2,7 @@
 
 import { memo } from 'react';
 
-import { useOrderStore } from '@shared/stores/useOrderStore';
+import { useOrderManager } from '@shared/hooks';
 import { Button } from '@shared/components/UI/Button';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 import { OrderItemStatus } from '@shared/types/orders';
@@ -28,8 +28,10 @@ export const OrderReceiptCardActions = memo(({
   isCommentOpen,
   onToggleComment,
 }: CardActionsProps) => {
-  const updateQuantity = useOrderStore((state) => state.updateQuantity);
-  const removeFromOrder = useOrderStore((state) => state.removeFromOrder);
+  const {
+    updateQuantity:updateOrderItemQuantity, 
+    removeItem: removeOrderItem
+  } = useOrderManager(tableId)
 
   const isDisabled = itemStatus !== OrderItemStatus.DRAFT
 
@@ -46,10 +48,10 @@ export const OrderReceiptCardActions = memo(({
         💬
       </Button>
 
-      <Button size="sm" onClick={() => updateQuantity(tableId, itemId, -1)} className={styles.qtyBtn} disabled={isDisabled}>-</Button>
+      <Button size="sm" onClick={() => updateOrderItemQuantity(itemId, -1)} className={styles.qtyBtn} disabled={isDisabled}>-</Button>
       <span className={styles.qtyValue}>{quantity}</span>
-      <Button size="sm" onClick={() => updateQuantity(tableId, itemId, 1)} className={styles.qtyBtn} disabled={isDisabled}>+</Button>
-      <Button size="sm" onClick={() => removeFromOrder(tableId, itemId)} className={styles.deleteBtn} disabled={isDisabled}>🗑️</Button>
+      <Button size="sm" onClick={() => updateOrderItemQuantity(itemId, 1)} className={styles.qtyBtn} disabled={isDisabled}>+</Button>
+      <Button size="sm" onClick={() => removeOrderItem(itemId)} className={styles.deleteBtn} disabled={isDisabled}>🗑️</Button>
     </FlexLayout>
   );
 });

@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
-import { useOrderStore } from '@shared/stores/useOrderStore';
+import { useOrderManager } from '@shared/hooks';
 import { useTableStore } from '@shared/stores/tableStore';
 import { TableStatus } from '@shared/types/tables';
 import { ROUTES } from '@shared/constants/routes';
@@ -19,13 +19,14 @@ export function OrderGuard({ children }: OrderGuardProps) {
   
   const [isVerified, setIsVerified] = useState(false);
 
+  const { items } = useOrderManager(tableId);
+  const orderExists = useMemo(() => items.length > 0, [items]);
+
   useEffect(() => {
     if (!tableId) {
       setIsVerified(true);
       return;
     }
-
-    const orderExists = useOrderStore.getState().ordersByTable[tableId];
     const currentTable = useTableStore.getState().getTableById(tableId);
 
     if (!currentTable) {
