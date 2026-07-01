@@ -27,6 +27,6 @@ export interface Table {
 export interface HallZone {
   id: string;
   name: string;
-  isDynamicZone: boolean;
+  isFlexibleHall: boolean;
   tables: Table[];
 }

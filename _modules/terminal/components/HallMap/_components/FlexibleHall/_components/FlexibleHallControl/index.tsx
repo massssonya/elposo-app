@@ -8,19 +8,19 @@ import { Numpad } from '@shared/components/Numpad';
 import { useNumpadState } from '@shared/components/Numpad/useNumpadState';
 import { Message } from '@shared/components/Message';
 
-import styles from './DynamicZoneControl.module.css';
+import styles from './FlexibleHallControl.module.css';
 
-interface DynamicZoneControlProps {
+interface FlexibleHallControlProps {
   zoneId: string;
   limitInput?: number;
   onCreateOrder: (zoneId: string, tableNumber: string) => { success: boolean; error?: string };
 }
 
-export const DynamicZoneControl = memo(({
+export const FlexibleHallControl = memo(({
   zoneId,
   limitInput = 3,
   onCreateOrder,
-}: DynamicZoneControlProps) => {
+}: FlexibleHallControlProps) => {
   const { 
     value: tableNumber, 
     error: localError, 
@@ -79,4 +79,4 @@ export const DynamicZoneControl = memo(({
   );
 });
 
-DynamicZoneControl.displayName = 'DynamicZoneControl';
+FlexibleHallControl.displayName = 'FlexibleHallControl';

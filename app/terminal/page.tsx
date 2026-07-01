@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
-const DynamicTerminalContent = dynamic(
-  () => import('@terminal/components/TerminalContent'),
+const DynamicTerminalPage = dynamic(
+  () => import('@terminal/pages/TerminalPage'),
   {
     ssr: false,
   }
@@ -10,7 +10,7 @@ const DynamicTerminalContent = dynamic(
 export default async function TerminalPage() {
   return (
     <main>
-      <DynamicTerminalContent />
+      <DynamicTerminalPage />
     </main>
   );
 }

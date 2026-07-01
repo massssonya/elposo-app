@@ -1,12 +1,12 @@
 'use client';
 
 import { ActivityProvider } from '@shared/providers/ActivityProvider';
-import { TableGrid } from "../TableGrid"
+import { HallMap } from "@terminal/components/HallMap"
 
-export default function TerminalContent() {
+export default function TerminalPage() {
   return (
     <ActivityProvider timeoutMs={100000}>
-      <TableGrid />
+      <HallMap />
     </ActivityProvider>
-    );
+  );
 }

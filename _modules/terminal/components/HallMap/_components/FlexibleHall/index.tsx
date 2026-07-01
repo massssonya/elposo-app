@@ -4,12 +4,12 @@ import { memo } from 'react';
 
 import { HallZone, Table } from '@shared/types/tables';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
-import { DynamicZoneControl } from './_components/DynamicZoneControl';
-import { DynamicZoneTableList } from './_components/DynamicZoneTableList';
+import { FlexibleHallControl } from './_components/FlexibleHallControl';
+import { FlexibleHallTableList } from './_components/FlexibleHallTableList';
 
-import styles from './DynamicZoneCanvas.module.css';
+import styles from './FlexibleHall.module.css';
 
-interface DynamicZoneCanvasProps {
+interface FlexibleHallProps {
   zone: HallZone;
   onTableClick: (table: Table) => void;
   onCreateDynamicOrder: (
@@ -18,11 +18,11 @@ interface DynamicZoneCanvasProps {
   ) => { success: boolean; error?: string };
 }
 
-export const DynamicZoneCanvas = memo(({
+export const FlexibleHall = memo(({
   zone,
   onTableClick,
   onCreateDynamicOrder,
-}: DynamicZoneCanvasProps) => {
+}: FlexibleHallProps) => {
   return (
     <div className={styles.canvas}>
       <FlexLayout 
@@ -31,12 +31,12 @@ export const DynamicZoneCanvas = memo(({
         align="stretch" 
         className={styles.dynamicLayout}
       >
-        <DynamicZoneControl 
+        <FlexibleHallControl 
           zoneId={zone.id} 
           onCreateOrder={onCreateDynamicOrder} 
         />
 
-        <DynamicZoneTableList 
+        <FlexibleHallTableList 
           tables={zone.tables} 
           onTableClick={onTableClick} 
         />
@@ -45,4 +45,4 @@ export const DynamicZoneCanvas = memo(({
   );
 });
 
-DynamicZoneCanvas.displayName = 'DynamicZoneCanvas';
+FlexibleHall.displayName = 'FlexibleHall';

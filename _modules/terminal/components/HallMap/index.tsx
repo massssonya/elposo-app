@@ -5,25 +5,25 @@ import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
-import { TabsGroup } from '@shared/components/UI/TabsGroup';
+import { TabsGroup as HallTabs } from '@shared/components/UI/TabsGroup';
 import { useTableStore } from '@shared/stores/tableStore';
 import { Table } from '@shared/types/tables';
 import { ROUTES } from '@shared/constants/routes';
 import { OrderOrchestrator } from "@shared/orchestrators";
 
-import styles from './TableGrid.module.css';
+import styles from './HallMap.module.css';
 
-const StaticZoneCanvas = dynamic(
-  () => import('./_components/StaticZone').then((mod) => mod.StaticZoneCanvas),
+const StaticHall = dynamic(
+  () => import('./_components/StaticHall').then((mod) => mod.StaticHall),
   { loading: () => <div className={styles.zoneLoader}>Загрузка карты столов...</div> }
 );
 
-const DynamicZoneCanvas = dynamic(
-  () => import('./_components/DynamicZone').then((mod) => mod.DynamicZoneCanvas),
+const FlexibleHall = dynamic(
+  () => import('./_components/FlexibleHall').then((mod) => mod.FlexibleHall),
   { loading: () => <div className={styles.zoneLoader}>Загрузка быстрой выдачи...</div> }
 );
 
-export function TableGrid() {
+export function HallMap() {
   const router = useRouter();
   const { zones, activeZoneId, setZones, setActiveZone, createDynamicTable } = useTableStore();
 
@@ -46,21 +46,21 @@ export function TableGrid() {
 
   return (
     <FlexLayout direction='col' className={styles.container}>
-      <TabsGroup
+      <HallTabs
         items={zones}
         activeId={activeZoneId}
         onSelect={setActiveZone}
         renderLabel={(zone) => zone.name}
       />
 
-      {activeZone.isDynamicZone ? (
-        <DynamicZoneCanvas
+      {activeZone.isFlexibleHall ? (
+        <FlexibleHall
           zone={activeZone}
           onTableClick={handleTableClick}
           onCreateDynamicOrder={handleCreateDynamicOrder}
         />
       ) : (
-        <StaticZoneCanvas 
+        <StaticHall 
           zone={activeZone} 
           onTableClick={handleTableClick} 
         />

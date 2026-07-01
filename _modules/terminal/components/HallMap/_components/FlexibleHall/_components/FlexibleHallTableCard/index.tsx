@@ -6,9 +6,9 @@ import { Table } from '@shared/types/tables';
 import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 import { usePopoverTrigger } from '@shared/components/UI/Popover/usePopoverTrigger';
 import { useTableCard } from './_hooks/useTableCard';
-import { DynamicZoneTableCardPreview } from './_components/DynamicZoneTableCardPreview';
+import { FlexibleHallTableCardPreview } from './_components/FlexibleHallTableCardPreview';
 
-import styles from './DynamicZoneTableCard.module.css';
+import styles from './FlexibleHallTableCard.module.css';
 
 interface TableCardProps {
   table: Table;
@@ -17,7 +17,7 @@ interface TableCardProps {
 
 const MOCK_TIME = 8
 
-export const DynamicZoneTableCard = memo(({ table, onClick }: TableCardProps) => {
+export const FlexibleHallTableCard = memo(({ table, onClick }: TableCardProps) => {
   const {
     tableOrder,
     currentItems,
@@ -74,7 +74,7 @@ export const DynamicZoneTableCard = memo(({ table, onClick }: TableCardProps) =>
         </span>
       </FlexLayout>
 
-      <DynamicZoneTableCardPreview 
+      <FlexibleHallTableCardPreview 
         items={currentItems} 
         isVisible={popover.isOpen} 
         coords={popover.coords}
@@ -84,4 +84,4 @@ export const DynamicZoneTableCard = memo(({ table, onClick }: TableCardProps) =>
   );
 });
 
-DynamicZoneTableCard.displayName = 'DynamicZoneTableCard';
+FlexibleHallTableCard.displayName = 'FlexibleHallTableCard';

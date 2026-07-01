@@ -4,7 +4,7 @@ export const MOCK_ZONES: HallZone[] = [
     {
       id: 'zone_main',
       name: 'Основной зал',
-      isDynamicZone: false,
+      isFlexibleHall: false,
       tables: [
         { id: 't1', number: '1', status: TableStatus.FREE, capacity: 2, isDynamic: false, x: 2, y: 70, width: 8, height: 14, shape: 'circle' },
         { id: 't2', number: '2', status: TableStatus.FREE, capacity: 2, isDynamic: false, x: 2, y: 50, width: 8, height: 14, shape: 'circle' },
@@ -26,7 +26,7 @@ export const MOCK_ZONES: HallZone[] = [
     {
       id: 'zone_fast',
       name: 'Быстрая выдача',
-      isDynamicZone: true,
+      isFlexibleHall: true,
       tables: []
     }
   ];

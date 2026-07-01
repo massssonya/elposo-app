@@ -4,16 +4,16 @@ import { memo } from 'react';
 
 import { Table } from '@shared/types/tables';
 import { GridLayout } from '@shared/components/UI/Layout/GridLayout';
-import { DynamicZoneTableCard } from '../DynamicZoneTableCard';
+import { FlexibleHallTableCard } from '../FlexibleHallTableCard';
 
-import styles from './DynamicZoneTableList.module.css';
+import styles from './FlexibleHallTableList.module.css';
 
 interface TableListProps {
   tables: Table[];
   onTableClick: (table: Table) => void;
 }
 
-export const DynamicZoneTableList = memo(({ tables, onTableClick }: TableListProps) => {
+export const FlexibleHallTableList = memo(({ tables, onTableClick }: TableListProps) => {
   return (
     <GridLayout
       minWidth="210px" 
@@ -21,7 +21,7 @@ export const DynamicZoneTableList = memo(({ tables, onTableClick }: TableListPro
       className={styles.dynamicList}
     >
       {tables.map((table) => (
-        <DynamicZoneTableCard
+        <FlexibleHallTableCard
           key={table.id}
           table={table}
           onClick={onTableClick}
@@ -31,4 +31,4 @@ export const DynamicZoneTableList = memo(({ tables, onTableClick }: TableListPro
   );
 });
 
-DynamicZoneTableList.displayName = 'DynamicZoneTableList';
+FlexibleHallTableList.displayName = 'FlexibleHallTableList';

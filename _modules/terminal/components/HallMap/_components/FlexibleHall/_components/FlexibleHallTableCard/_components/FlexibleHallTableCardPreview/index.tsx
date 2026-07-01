@@ -7,7 +7,7 @@ import { FlexLayout } from '@shared/components/UI/Layout/FlexLayout';
 import { Popover, PopoverCoords } from '@shared/components/UI/Popover';
 import { useOrderPreview } from './useOrderPreview';
 
-import styles from './DynamicZoneTableCardPreview.module.css';
+import styles from './FlexibleHallTableCardPreview.module.css';
 
 interface PreviewProps {
   items: OrderItem[];
@@ -18,7 +18,7 @@ interface PreviewProps {
 
 const MAX_VISIBLE_PREVIEW_ITEMS = 5;
 
-export const DynamicZoneTableCardPreview = memo(({ items, isVisible, coords, position }: PreviewProps) => {
+export const FlexibleHallTableCardPreview = memo(({ items, isVisible, coords, position }: PreviewProps) => {
     const { isEmpty, visibleItems, hasMore, moreText } = useOrderPreview({
       items,
       maxVisibleItems: MAX_VISIBLE_PREVIEW_ITEMS
@@ -50,4 +50,4 @@ export const DynamicZoneTableCardPreview = memo(({ items, isVisible, coords, pos
     );
   });
   
-  DynamicZoneTableCardPreview.displayName = 'DynamicZoneTableCardPreview';
+  FlexibleHallTableCardPreview.displayName = 'FlexibleHallTableCardPreview';

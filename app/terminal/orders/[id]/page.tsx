@@ -1,16 +1,17 @@
 import dynamic from 'next/dynamic';
 
-const DynamicOrderConstructor = dynamic(
-  () => import('@terminal/components/OrderConstructor'),
+const OrderPageModule = dynamic(
+  () => import('@terminal/pages/OrderPage'),
   {
     ssr: false,
   }
 );
 
-export default async function OrderPage() {
+export default function OrderPage() {
+  
   return (
     <main>
-      <DynamicOrderConstructor />
+      <OrderPageModule />
     </main>
   );
 }

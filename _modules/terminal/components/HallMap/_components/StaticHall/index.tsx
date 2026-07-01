@@ -6,9 +6,9 @@ import { HallZone, Table } from '@shared/types/tables';
 import { PanZoomCanvas } from '@shared/components/PanZoomCanvas';
 import { StaticTableItem } from './StaticTableItem';
 
-import styles from './StaticZoneCanvas.module.css';
+import styles from './StaticHall.module.css';
 
-interface StaticZoneCanvasProps {
+interface StaticHallProps {
   zone: HallZone;
   onTableClick: (table: Table) => void;
 }
@@ -16,7 +16,7 @@ interface StaticZoneCanvasProps {
 const CANVAS_WIDTH = 2000;
 const CANVAS_HEIGHT = 1200;
 
-export const StaticZoneCanvas = React.memo(({ zone, onTableClick }: StaticZoneCanvasProps) => {
+export const StaticHall = React.memo(({ zone, onTableClick }: StaticHallProps) => {
 
   return (
     <PanZoomCanvas 
